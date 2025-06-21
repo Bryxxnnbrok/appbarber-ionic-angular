@@ -3,6 +3,15 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./tabs/tabs.routes').then((m) => m.routes),
+    redirectTo: 'bienvenida',
+    pathMatch: 'full'
   },
+  {
+    path: 'bienvenida',
+    loadComponent: () => import('./pages/bienvenida/bienvenida.page').then(m => m.BienvenidaPage)
+  },
+  {
+    path: '**',
+    redirectTo: 'bienvenida' // Cambiado a redirect en lugar de recargar el mismo componente
+  }
 ];

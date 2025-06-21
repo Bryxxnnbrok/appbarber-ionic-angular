@@ -1,0 +1,87 @@
+/* src/app/pages/bienvenida/bienvenida.page.scss */
+.bienvenida-content {
+  --background: #4A5568;  // Color de fondo azul oscuro similar al diseño
+  
+  .container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .logo-container {
+    margin-bottom: 60px;
+    
+    .logo-circle {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      
+      .logo-img {
+        width: 160px;
+        height: 160px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+    }
+  }
+  
+  .welcome-text {
+    margin-bottom: 80px;
+    text-align: center;
+    
+    p {
+      color: #E2E8F0;
+      font-size: 18px;
+      font-weight: 300;
+      margin: 0;
+      letter-spacing: 0.5px;
+    }
+  }
+  
+  .button-container {
+    width: 100%;
+    max-width: 280px;
+    
+    .empezar-btn {
+      --background: #D69E2E;
+      --background-hover: #B7791F;
+      --background-activated: #B7791F;
+      --border-radius: 25px;
+      --color: white;
+      --padding-top: 15px;
+      --padding-bottom: 15px;
+      font-size: 16px;
+      font-weight: 500;
+      text-transform: none;
+      letter-spacing: 0.5px;
+      box-shadow: 0 4px 15px rgba(214, 158, 46, 0.3);
+    }
+  }
+}
+
+// Responsive
+@media (max-width: 480px) {
+  .bienvenida-content {
+    .logo-container .logo-circle {
+      width: 150px;
+      height: 150px;
+      
+      .logo-img {
+        width: 120px;
+        height: 120px;
+      }
+    }
+    
+    .welcome-text p {
+      font-size: 16px;
+    }
+  }
+}
