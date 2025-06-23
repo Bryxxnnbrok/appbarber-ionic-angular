@@ -1,13 +1,104 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>home</ion-title>
+<ion-header [translucent]="true" class="custom-header">
+  <ion-toolbar class="custom-toolbar">
+    <ion-buttons slot="start">
+      <img src="assets/images/logo.png" alt="Logo" class="logo-img">
+      <div class="welcome-text">
+        <span class="welcome-title">Bienvenido</span>
+        <span class="username">{{ username }}!</span>
+      </div>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="openMenu()" class="menu-button">
+        <ion-icon name="menu"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">home</ion-title>
+<ion-content [fullscreen]="true" class="home-content" id="main-content">
+  
+  <!-- Barra de búsqueda -->
+  <div class="search-container">
+    <ion-searchbar 
+      placeholder="buscar......" 
+      class="custom-searchbar"
+      [(ngModel)]="searchTerm"
+      (ionInput)="onSearchChange($event)">
+    </ion-searchbar>
+  </div>
+
+  <!-- Sección de Servicios -->
+  <div class="services-section">
+    <h2 class="services-title">Servicios</h2>
+    
+    <!-- Carousel de servicios -->
+    <div class="services-carousel">
+      <div class="services-container" #servicesContainer>
+        
+        <!-- Iteración dinámica de servicios -->
+        <div class="service-card" 
+             *ngFor="let service of services" 
+             (click)="goToService(service.id)">
+          <div class="service-image">
+            <img [src]="service.image" [alt]="service.name">
+          </div>
+          <div class="service-info">
+            <h3>{{ service.name }}</h3>
+            <p>{{ service.description }}</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Botón de navegación derecha -->
+      <ion-button 
+        fill="clear" 
+        class="carousel-nav-btn right-nav"
+        (click)="scrollServices('right')">
+        <ion-icon name="chevron-forward"></ion-icon>
+      </ion-button>
+    </div>
+  </div>
+
+  <!-- Botones de acción -->
+  <div class="action-buttons">
+    <ion-button 
+      expand="block" 
+      class="reserve-button"
+      (click)="goToReservation()">
+      Reservar cita
+    </ion-button>
+
+    <ion-fab-button 
+      class="ai-button"
+      (click)="goToAI()">
+      <ion-icon name="chatbubble-ellipses"></ion-icon>
+    </ion-fab-button>
+  </div>
+
+</ion-content>
+
+<!-- Menú lateral -->
+<ion-menu side="end" menuId="main-menu" contentId="main-content">
+  <ion-header>
+    <ion-toolbar color="dark">
+      <ion-title>Menú</ion-title>
     </ion-toolbar>
   </ion-header>
-</ion-content>
+  <ion-content color="dark">
+    <ion-list>
+      <ion-item button (click)="goToProfile()">
+        <ion-icon name="person" slot="start"></ion-icon>
+        <ion-label>Mi Perfil</ion-label>
+      </ion-item>
+      <ion-item button (click)="goToHistory()">
+        <ion-icon name="time" slot="start"></ion-icon>
+        <ion-label>Historial</ion-label>
+      </ion-item>
+      <ion-item button (click)="logout()">
+        <ion-icon name="log-out" slot="start"></ion-icon>
+        <ion-label>Salir</ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>

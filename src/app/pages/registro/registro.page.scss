@@ -1,0 +1,273 @@
+// Variables exactas del diseño
+:root {
+  --bg-primary: #4a5568;
+  --bg-secondary: #2d3748;
+  --accent-beige: #d4b896;
+  --text-primary: #ffffff;
+  --text-secondary: #a0aec0;
+  --text-muted: #718096;
+  --border-color: #e2e8f0;
+  --input-border: #4a5568;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: 'Hahmlet', serif;
+}
+
+.registro-content {
+  --background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
+  --color: #ffffff;
+  --padding-top: 0;
+  --padding-bottom: 0;
+  --padding-start: 0;
+  --padding-end: 0;
+}
+
+.registro-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+  max-width: 350px;
+  margin: 0 auto;
+  width: 100%;
+  animation: fadeInUp 0.6s ease-out;
+}
+
+// Logo exacto
+.logo-container {
+  margin-bottom: 30px;
+  
+  .logo {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: white;
+    padding: 6px;
+    display: block;
+  }
+}
+
+// Título exacto
+.registro-title {
+  color: #D5C2BD;
+  font-size: 26px;
+  font-weight: 300;
+  margin: 0 0 40px 0;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+
+// Formulario
+.registro-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+// Inputs exactos como la imagen adaptados para ion-input
+.input-group {
+  position: relative;
+  margin-bottom: 30px;
+  
+  ion-input.custom-input {
+    --background: transparent;
+    --color: #D5C2BD;
+    --placeholder-color: #D5C2BD;
+    --placeholder-opacity: 1;
+    --border-radius: 0;
+    --border-color: transparent;
+    --border-style: none;
+    --border-width: 0;
+    --highlight-color-focused: #D5C2BD;
+    --highlight-color-valid: #D5C2BD;
+    --highlight-color-invalid: #D5C2BD;
+    --padding-start: 0;
+    --padding-end: 0;
+    --padding-top: 12px;
+    --padding-bottom: 12px;
+    
+    font-size: 16px;
+    font-weight: 300;
+    border-bottom: 1px solid #D5C2BD;
+    border-radius: 0;
+    transition: border-color 0.3s ease;
+    
+    &.ion-focused {
+      border-bottom-color: #D5C2BD;
+    }
+    
+    &.ion-valid {
+      border-bottom-color: #D5C2BD;
+    }
+    
+    &.ion-invalid {
+      border-bottom-color: #D5C2BD;
+    }
+  }
+  
+  &.password-group {
+    .password-toggle-btn {
+      --color: #D5C2BD;
+      --background: transparent;
+      --background-hover: transparent;
+      --background-activated: transparent;
+      --box-shadow: none;
+      --ripple-color: transparent;
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      height: auto;
+      width: auto;
+      margin: 0;
+      
+      .password-toggle {
+        font-size: 18px;
+        color: #D5C2BD;
+        transition: color 0.3s ease;
+        
+        &:hover {
+          color: #D5C2BD;
+        }
+      }
+    }
+  }
+}
+
+// Botón principal exacto adaptado para ion-button
+ion-button.registro-button {
+  --background: #D5C2BD;
+  --background-hover: #c5a880;
+  --background-activated: #c5a880;
+  --color: #4a5568;
+  --border-radius: 25px;
+  --box-shadow: none;
+  --ripple-color: rgba(74, 85, 104, 0.2);
+  
+  height: 50px;
+  font-size: 16px;
+  font-weight: 500;
+  margin: 20px 0 30px 0;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-1px);
+  }
+  
+  &.button-disabled {
+    opacity: 0.7;
+    transform: none;
+  }
+  
+  ion-spinner {
+    --color: #4a5568;
+    width: 20px;
+    height: 20px;
+  }
+}
+
+// Enlace login exacto adaptado para ion-button
+.login-link {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+  
+  .login-text {
+    color: #d5c2bda7;
+    font-size: 15px;
+    font-weight: 100;
+  }
+  
+  .login-link-btn {
+    --background: transparent;
+    --background-hover: transparent;
+    --background-activated: transparent;
+    --color: #D5C2BD;
+    --ripple-color: rgba(212, 184, 150, 0.2);
+    --box-shadow: none;
+    --padding-start: 4px;
+    --padding-end: 0;
+    
+    height: auto;
+    margin: 0;
+    text-transform: none;
+    
+    .login-link-text {
+      font-size: 15px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: text-decoration 0.3s ease;
+      
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+// Animaciones
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Responsive
+@media (max-width: 480px) {
+  .registro-container {
+    padding: 16px;
+    max-width: 320px;
+  }
+  
+  .registro-title {
+    font-size: 22px;
+    margin-bottom: 30px;
+  }
+  
+  .logo-container {
+    margin-bottom: 25px;
+    
+    .logo {
+      width: 60px;
+      height: 60px;
+    }
+  }
+  
+  .input-group {
+    margin-bottom: 25px;
+  }
+}
+
+// Animación de entrada suave
+.registro-container {
+  opacity: 0;
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+// Estados de hover para mejor UX
+.input-group {
+  ion-input.custom-input:hover {
+    border-bottom-color: rgba(255, 255, 255, 0.7);
+  }
+}
+
+// Ajustes finales para match exacto con la imagen
+.registro-container {
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+.input-group:last-of-type {
+  margin-bottom: 25px;
+}

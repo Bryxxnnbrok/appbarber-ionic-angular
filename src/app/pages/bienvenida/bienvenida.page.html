@@ -1,21 +1,22 @@
-<!-- src/app/pages/bienvenida/bienvenida.page.html -->
+<!-- bienvenida.page.html -->
 <ion-content class="bienvenida-content">
-  <div class="container">
-    <!-- Logo circular -->
-    <div class="logo-container">
-      <div class="logo-circle">
-        <img src="assets/images/logo-barberia.png" alt="Tahuantinsuyo Men's Barbershop" class="logo-img">
-      </div>
+  <div class="bienvenida-container">
+    <!-- Logo Section -->
+    <div class="logo-section">
+      <img src="assets/images/logo-barberia.png" alt="Tahuantisuyo Barbershop" class="logo-image">
     </div>
-    
-    <!-- Texto principal -->
+
+    <!-- Welcome Text -->
     <div class="welcome-text">
       <p>¿Listo para tu próximo corte?</p>
     </div>
-    
-    <!-- Botón empezar -->
-    <div class="button-container">
-      <ion-button class="empezar-btn" (click)="irALogin()" expand="block">
+
+    <!-- Start Button -->
+    <div class="button-section">
+      <ion-button 
+        expand="block" 
+        class="start-button" 
+        (click)="goToLogin()">
         Empezar
       </ion-button>
     </div>

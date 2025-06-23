@@ -1,6 +1,4 @@
-import { Injectable } from '@angular/core';
-// 👆 Injectable = Esta clase puede ser "inyectada" en otras partes de la app
-
+import { Injectable, NgZone } from '@angular/core';
 import { 
   Auth, 
   signInWithEmailAndPassword, 
@@ -9,13 +7,15 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
   onAuthStateChanged,
-  User
+  User,
+  fetchSignInMethodsForEmail,
+  linkWithCredential,
+  EmailAuthProvider
 } from '@angular/fire/auth';
-// 👆 Importamos todas las funciones de Firebase Authentication
 
 import { 
   Firestore, 
-  doc, 
+  doc,
   setDoc, 
   getDoc, 
   collection,
@@ -24,169 +24,166 @@ import {
   where,
   getDocs
 } from '@angular/fire/firestore';
-// 👆 Importamos funciones para manejar la base de datos Firestore
 
 import { Router } from '@angular/router';
 import { UserCredential } from 'firebase/auth';
-// 👆 Para navegar entre pantallas de la app
-
 import { Observable } from 'rxjs';
-// 👆 Para manejar datos que cambian en tiempo real
 
-// 🔥 INTERFAZ: Define cómo debe verse la información del usuario
+// 📦 Interfaz para los datos del usuario
 export interface UserData {
-  uid: string;        // ID único del usuario
-  email: string;      // Email del usuario
-  nombre: string;     // Nombre completo
-  telefono?: string;  // Teléfono (opcional, por eso el ?)
-  createdAt: Date;    // Fecha cuando se registró
-  ultimaReserva?: Date; // Última vez que hizo una reserva
+  uid: string;
+  email: string;
+  nombre: string;
+  telefono?: string;
+  createdAt: Date;
+  ultimaReserva?: Date;
 }
 
-// 🔥 INTERFAZ: Define cómo debe verse una reserva
+// 📦 Interfaz para las reservas
 export interface Reserva {
-  id?: string;           // ID de la reserva (opcional)
-  usuarioId: string;     // ID del usuario que hace la reserva
-  servicio: string;      // Tipo de servicio (corte, barba, etc.)
-  fecha: Date;           // Fecha de la cita
-  hora: string;          // Hora de la cita (ej: "14:30")
-  precio: number;        // Costo del servicio
-  estado: 'pendiente' | 'confirmada' | 'cancelada'; // Estado de la reserva
-  createdAt: Date;       // Cuándo se creó la reserva
+  id?: string;
+  usuarioId: string;
+  servicio: string;
+  fecha: Date;
+  hora: string;
+  precio: number;
+  estado: 'pendiente' | 'confirmada' | 'cancelada';
+  createdAt: Date;
 }
 
-@Injectable({
-  providedIn: 'root' // 👈 Significa que este servicio estará disponible en toda la app
-})
+@Injectable({ providedIn: 'root' })
 export class AuthService {
+  private currentUser: User | null = null;
 
-  // 🎯 VARIABLES PRIVADAS (solo este servicio las puede usar)
-  private currentUser: User | null = null; // Usuario actual logueado
-  
-  // 🏗️ CONSTRUCTOR: Se ejecuta cuando se crea el servicio
   constructor(
-    private auth: Auth,        // 👈 Conexión con Firebase Auth
-    private firestore: Firestore, // 👈 Conexión con Firestore Database
-    private router: Router     // 👈 Para navegar entre pantallas
+    private auth: Auth,
+    private firestore: Firestore,
+    private router: Router,
+    private ngZone: NgZone
   ) {
-    // 👂 ESCUCHAR cambios en el estado de autenticación
-    // Cada vez que el usuario hace login/logout, esto se ejecuta
     onAuthStateChanged(this.auth, (user) => {
-      this.currentUser = user; // Guardamos el usuario actual
+      this.currentUser = user;
       console.log('Estado de auth cambió:', user ? 'Logueado' : 'No logueado');
     });
   }
 
-  // 📝 FUNCIÓN: Registrar nuevo usuario
-  async register(email: string, password: string, userData: { nombre: string, telefono?: string }
-  ): Promise<UserCredential>{  //tipo de retorno añadido
+  // ✅ REGISTRO con correo/contraseña - MEJORADO
+  async register(email: string, password: string, userData: { nombre: string, telefono?: string }): Promise<UserCredential> {
     try {
-      console.log('🚀 Iniciando registro de usuario...');
+      // 🔍 PRIMERO: Verificar si el email ya existe y con qué método
+      const signInMethods = await fetchSignInMethodsForEmail(this.auth, email);
       
-      // 1️⃣ Crear cuenta en Firebase Authentication
+      if (signInMethods.length > 0) {
+        // El email ya existe
+        if (signInMethods.includes('google.com')) {
+          throw new Error('Este email ya está registrado con Google. Usa el botón de Google para iniciar sesión.');
+        } else if (signInMethods.includes('password')) {
+          throw new Error('Este email ya está registrado. Ve a iniciar sesión.');
+        }
+      }
+
+      // Si llegamos aquí, el email no existe, proceder con el registro
       const result = await createUserWithEmailAndPassword(this.auth, email, password);
-      console.log('✅ Usuario creado en Auth:', result.user.uid);
 
+      // Guardar datos adicionales del usuario en Firestore
+      const userDocData: UserData = {
+        uid: result.user.uid,
+        email,
+        nombre: userData.nombre,
+        telefono: userData.telefono,
+        createdAt: new Date()
+      };
 
-        // 3️⃣ Crear documento del usuario en Firestore
-        const userDocData: UserData = {
-          uid: result.user.uid,        // ID único del usuario
-          email: email,                // Email proporcionado
-          nombre: userData.nombre,     // Nombre proporcionado
-          telefono: userData.telefono, // Teléfono (puede ser undefined)
-          createdAt: new Date()        // Fecha actual
-        };
+      await setDoc(doc(this.firestore, 'users', result.user.uid), userDocData);
 
-        // 4️⃣ Guardar en la colección 'users' con el UID como ID del documento
-        await setDoc(doc(this.firestore, 'users', result.user.uid), userDocData);
-        console.log('✅ Datos del usuario guardados en Firestore');
-
-        // 5️⃣ Navegar a la pantalla principal
-        this.router.navigate(['/tabs']);
-        
-        return result; // Retornar resultado exitoso
-      
-    } 
-    catch (error: any) {
-      console.error('❌ Error en registro:', error);
-      
-      // 🚨 Manejar diferentes tipos de errores
-      let errorMessage = 'Error desconocido';
-      
-      switch (error.code) {
-        case 'auth/email-already-in-use':
-          errorMessage = 'Este email ya está registrado';
-          break;
-        case 'auth/weak-password':
-          errorMessage = 'La contraseña debe tener al menos 6 caracteres';
-          break;
-        case 'auth/invalid-email':
-          errorMessage = 'Email inválido';
-          break;
-        default:
-          errorMessage = error.message;
-      }
-      
-      throw new Error(errorMessage); // Lanzar error personalizado
-    }
-  }
-
-  // 🔐 FUNCIÓN: Hacer login con email y contraseña
-  async login(email: string, password: string) {
-    try {
-      console.log('🚀 Iniciando login...');
-      
-      // 1️⃣ Intentar hacer login en Firebase
-      const result = await signInWithEmailAndPassword(this.auth, email, password);
-      console.log('✅ Login exitoso:', result.user.uid);
-      
-      // 2️⃣ Navegar a la pantalla principal
-      this.router.navigate(['/tabs']);
-      
+      // Redirigir al home
+      this.ngZone.run(() => this.router.navigate(['/home']));
       return result;
+
     } catch (error: any) {
-      console.error('❌ Error en login:', error);
-      
-      // 🚨 Manejar errores de login
+      console.error('Error en register:', error);
       let errorMessage = 'Error desconocido';
       
       switch (error.code) {
-        case 'auth/user-not-found':
-          errorMessage = 'Usuario no encontrado';
+        case 'auth/email-already-in-use': 
+          errorMessage = 'Este email ya está registrado'; 
           break;
-        case 'auth/wrong-password':
-          errorMessage = 'Contraseña incorrecta';
+        case 'auth/weak-password': 
+          errorMessage = 'La contraseña debe tener al menos 6 caracteres'; 
           break;
-        case 'auth/invalid-email':
-          errorMessage = 'Email inválido';
+        case 'auth/invalid-email': 
+          errorMessage = 'Email inválido'; 
           break;
-        case 'auth/too-many-requests':
-          errorMessage = 'Demasiados intentos. Intenta más tarde';
-          break;
-        default:
-          errorMessage = error.message;
+        default: 
+          // Si es nuestro mensaje personalizado, usarlo
+          errorMessage = error.message || 'Error al registrarse';
       }
-      
       throw new Error(errorMessage);
     }
   }
 
-  // 🎯 FUNCIÓN: Login con Google
+  // ✅ INICIO DE SESIÓN con correo y contraseña - MEJORADO
+  async login(email: string, password: string) {
+    try {
+      // 🔍 PRIMERO: Verificar los métodos de autenticación disponibles
+      const methods = await fetchSignInMethodsForEmail(this.auth, email);
+
+      if (methods.length === 0) {
+        throw new Error('No existe una cuenta con este email. Regístrate primero.');
+      }
+
+      // Si el correo fue registrado SOLO con Google (no tiene password)
+      if (methods.includes('google.com') && !methods.includes('password')) {
+        throw new Error('Este correo está registrado con Google. Usa el botón "Iniciar con Google".');
+      }
+
+      // Si no tiene método de contraseña
+      if (!methods.includes('password')) {
+        throw new Error('Este email no tiene configurada una contraseña. Usa otro método de inicio de sesión.');
+      }
+
+      // Si es válido, iniciar sesión con correo y contraseña
+      const result = await signInWithEmailAndPassword(this.auth, email, password);
+
+      // Redirigir al home
+      this.ngZone.run(() => this.router.navigate(['/home']));
+      return result;
+
+    } catch (error: any) {
+      console.error('Error en login:', error);
+      let errorMessage = error.message || 'Error desconocido';
+      
+      switch (error.code) {
+        case 'auth/user-not-found': 
+          errorMessage = 'No existe una cuenta con este email'; 
+          break;
+        case 'auth/wrong-password': 
+          errorMessage = 'Contraseña incorrecta'; 
+          break;
+        case 'auth/invalid-email': 
+          errorMessage = 'Email inválido'; 
+          break;
+        case 'auth/too-many-requests': 
+          errorMessage = 'Demasiados intentos. Intenta más tarde'; 
+          break;
+        case 'auth/user-disabled':
+          errorMessage = 'Esta cuenta ha sido deshabilitada';
+          break;
+      }
+      throw new Error(errorMessage);
+    }
+  }
+
+  // ✅ INICIO DE SESIÓN con Google - MEJORADO
   async loginWithGoogle() {
     try {
-      console.log('🚀 Iniciando login con Google...');
-      
-      // 1️⃣ Crear proveedor de Google
       const provider = new GoogleAuthProvider();
-      
-      // 2️⃣ Abrir popup de Google para login
       const result = await signInWithPopup(this.auth, provider);
-      console.log('✅ Login con Google exitoso:', result.user.uid);
-      
-      // 3️⃣ Verificar si es la primera vez que se loguea
+
+      // Verificar si ya existe el documento del usuario en Firestore
       const userDoc = await getDoc(doc(this.firestore, 'users', result.user.uid));
-      
-      // 4️⃣ Si no existe el documento, crear uno (usuario nuevo)
+
+      // Si no existe, crearlo
       if (!userDoc.exists()) {
         const userData: UserData = {
           uid: result.user.uid,
@@ -194,171 +191,113 @@ export class AuthService {
           nombre: result.user.displayName || 'Usuario Google',
           createdAt: new Date()
         };
-        
         await setDoc(doc(this.firestore, 'users', result.user.uid), userData);
-        console.log('✅ Nuevo usuario de Google guardado en Firestore');
       }
-      
-      // 5️⃣ Navegar a pantalla principal
-      this.router.navigate(['/tabs']);
-      
+
+      // Redirigir al home
+      this.ngZone.run(() => this.router.navigate(['/home']));
       return result;
+
     } catch (error: any) {
-      console.error('❌ Error en login con Google:', error);
-      throw new Error('Error al iniciar sesión con Google');
+      console.error('Error en loginWithGoogle:', error);
+      let errorMessage = 'Error al iniciar sesión con Google';
+      
+      switch (error.code) {
+        case 'auth/popup-closed-by-user':
+          errorMessage = 'Cancelaste el inicio de sesión';
+          break;
+        case 'auth/popup-blocked':
+          errorMessage = 'El popup fue bloqueado. Permite popups para este sitio';
+          break;
+      }
+      throw new Error(errorMessage);
     }
   }
 
-  // 🚪 FUNCIÓN: Cerrar sesión
+  // 🆕 FUNCIÓN PARA VINCULAR CUENTAS (opcional)
+  async linkAccountWithPassword(email: string, password: string) {
+    try {
+      if (!this.currentUser) {
+        throw new Error('Debes estar logueado para vincular cuentas');
+      }
+
+      const credential = EmailAuthProvider.credential(email, password);
+      await linkWithCredential(this.currentUser, credential);
+      
+      return true;
+    } catch (error: any) {
+      console.error('Error al vincular cuenta:', error);
+      throw new Error('No se pudo vincular la cuenta');
+    }
+  }
+
+  // ✅ Cerrar sesión
   async logout() {
     try {
-      console.log('🚀 Cerrando sesión...');
-      
-      // 1️⃣ Cerrar sesión en Firebase
       await signOut(this.auth);
-      console.log('✅ Sesión cerrada exitosamente');
-      
-      // 2️⃣ Limpiar usuario actual
       this.currentUser = null;
-      
-      // 3️⃣ Navegar a pantalla de login
-      this.router.navigate(['/login']);
+      this.ngZone.run(() => this.router.navigate(['/login']));
     } catch (error) {
-      console.error('❌ Error al cerrar sesión:', error);
       throw new Error('Error al cerrar sesión');
     }
   }
 
-  // 👤 FUNCIÓN: Obtener usuario actual
+  // ✅ Obtener usuario actual
   getCurrentUser(): User | null {
-    return this.currentUser; // Retorna el usuario logueado o null
+    return this.currentUser;
   }
 
-  // ✅ FUNCIÓN: Verificar si hay usuario logueado
+  // ✅ Saber si hay sesión activa
   isLoggedIn(): boolean {
-    return this.currentUser !== null; // true si hay usuario, false si no
+    return this.currentUser !== null;
   }
 
-  // 👂 FUNCIÓN: Escuchar cambios en el estado de autenticación
+  // ✅ Escuchar cambios en la sesión
   getAuthState(): Observable<User | null> {
-    return new Observable(observer => {
-      // Cada vez que cambie el estado de auth, notificar al observador
-      return onAuthStateChanged(this.auth, observer);
-    });
+    return new Observable(observer => onAuthStateChanged(this.auth, observer));
   }
 
-  // 📊 FUNCIÓN: Obtener datos completos del usuario desde Firestore
+  // ✅ Obtener los datos de perfil desde Firestore
   async getUserData(): Promise<UserData | null> {
     try {
-      // 1️⃣ Verificar que hay usuario logueado
-      if (!this.currentUser) {
-        console.log('⚠️ No hay usuario logueado');
-        return null;
-      }
-      
-      // 2️⃣ Obtener documento del usuario desde Firestore
+      if (!this.currentUser) return null;
       const userDoc = await getDoc(doc(this.firestore, 'users', this.currentUser.uid));
-      
-      // 3️⃣ Si existe el documento, retornar los datos
-      if (userDoc.exists()) {
-        console.log('✅ Datos del usuario obtenidos:', userDoc.data());
-        return userDoc.data() as UserData;
-      } else {
-        console.log('⚠️ Documento del usuario no encontrado');
-        return null;
-      }
+      return userDoc.exists() ? userDoc.data() as UserData : null;
     } catch (error) {
-      console.error('❌ Error al obtener datos del usuario:', error);
       return null;
     }
   }
 
-  // 📅 FUNCIÓN: Crear nueva reserva
+  // ✅ Crear nueva reserva
   async createReserva(reservaData: Omit<Reserva, 'usuarioId' | 'createdAt'>) {
-    try {
-      // 1️⃣ Verificar que hay usuario logueado
-      if (!this.currentUser) {
-        throw new Error('Debes estar logueado para hacer una reserva');
-      }
-      
-      console.log('🚀 Creando nueva reserva...');
-      
-      // 2️⃣ Crear objeto de reserva completo
-      const reserva: Omit<Reserva, 'id'> = {
-        ...reservaData,                    // Datos proporcionados
-        usuarioId: this.currentUser.uid,   // ID del usuario actual
-        createdAt: new Date()              // Fecha de creación
-      };
-      
-      // 3️⃣ Guardar en la colección 'reservas'
-      const docRef = await addDoc(collection(this.firestore, 'reservas'), reserva);
-      console.log('✅ Reserva creada con ID:', docRef.id);
-      
-      return docRef.id; // Retornar ID de la reserva creada
-    } catch (error) {
-      console.error('❌ Error al crear reserva:', error);
-      throw error;
-    }
+    if (!this.currentUser) throw new Error('Debes estar logueado para hacer una reserva');
+
+    const reserva: Omit<Reserva, 'id'> = {
+      ...reservaData,
+      usuarioId: this.currentUser.uid,
+      createdAt: new Date()
+    };
+
+    const docRef = await addDoc(collection(this.firestore, 'reservas'), reserva);
+    return docRef.id;
   }
 
-  // 📋 FUNCIÓN: Obtener historial de reservas del usuario
+  // ✅ Obtener reservas del usuario actual
   async getUserReservas(): Promise<Reserva[]> {
-    try {
-      // 1️⃣ Verificar que hay usuario logueado
-      if (!this.currentUser) {
-        console.log('⚠️ No hay usuario logueado');
-        return [];
-      }
-      
-      console.log('🚀 Obteniendo reservas del usuario...');
-      
-      // 2️⃣ Crear consulta para obtener solo las reservas del usuario actual
-      const q = query(
-        collection(this.firestore, 'reservas'),
-        where('usuarioId', '==', this.currentUser.uid)
-      );
-      
-      // 3️⃣ Ejecutar consulta
-      const querySnapshot = await getDocs(q);
-      
-      // 4️⃣ Convertir documentos a array de reservas
-      const reservas: Reserva[] = [];
-      querySnapshot.forEach((doc) => {
-        reservas.push({
-          id: doc.id,           // ID del documento
-          ...doc.data()         // Datos de la reserva
-        } as Reserva);
-      });
-      
-      console.log(`✅ Se encontraron ${reservas.length} reservas`);
-      return reservas;
-    } catch (error) {
-      console.error('❌ Error al obtener reservas:', error);
-      return [];
-    }
+    if (!this.currentUser) return [];
+
+    const q = query(
+      collection(this.firestore, 'reservas'),
+      where('usuarioId', '==', this.currentUser.uid)
+    );
+
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }) as Reserva);
   }
 
-  // 🔄 FUNCIÓN: Actualizar datos del usuario
+  // ✅ Actualizar perfil del usuario
   async updateUserData(userData: Partial<UserData>) {
-    try {
-      // 1️⃣ Verificar que hay usuario logueado
-      if (!this.currentUser) {
-        throw new Error('Debes estar logueado para actualizar datos');
-      }
-      
-      console.log('🚀 Actualizando datos del usuario...');
-      
-      // 2️⃣ Actualizar documento en Firestore
-      await setDoc(
-        doc(this.firestore, 'users', this.currentUser.uid),
-        userData,
-        { merge: true } // merge: true = solo actualizar campos proporcionados
-      );
-      
-      console.log('✅ Datos actualizados exitosamente');
-    } catch (error) {
-      console.error('❌ Error al actualizar datos:', error);
-      throw error;
-    }
+    if (!this.currentUser) throw new Error('Debes estar logueado para actualizar datos');
+    await setDoc(doc(this.firestore, 'users', this.currentUser.uid), userData, { merge: true });
   }
 }
