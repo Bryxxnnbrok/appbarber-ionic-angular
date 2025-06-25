@@ -1,0 +1,295 @@
+// Contenedor principal con fondo oscuro idéntico a la imagen
+.main-content {
+  --background: #3a4a5c; // Fondo gris azulado oscuro como en la imagen
+  --color: #ffffff;
+  height: 100vh;
+  position: relative;
+}
+
+// Header con logo y menú hamburguesa
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 20px 0 20px;
+  position: relative;
+  z-index: 10;
+}
+
+// Contenedor del logo circular
+.logo-container {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  
+  .logo-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+}
+
+// Botón del menú hamburguesa
+.menu-button {
+  --color: #ffffff;
+  --background: transparent;
+  margin: 0;
+  
+  .menu-icon {
+    font-size: 24px;
+    color: #ffffff;
+  }
+}
+
+// Contenedor principal del chat
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 140px); // Altura total menos header y input
+  padding: 0 20px;
+  position: relative;
+}
+
+// Sección de saludo del bot (parte superior)
+.bot-greeting {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 60px;
+  margin-bottom: 40px;
+}
+
+// Avatar del robot con diseño personalizado
+.bot-avatar {
+  width: 80px;
+  height: 80px;
+  background: #e8e9ea; // Fondo gris claro como en la imagen
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  
+  // Icono principal del robot
+  .robot-icon {
+    font-size: 32px;
+    color: #6c757d;
+    position: absolute;
+    bottom: 10px;
+  }
+  
+  // Cara del robot con ojos
+  .bot-face {
+    position: absolute;
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    
+    .bot-eyes {
+      display: flex;
+      gap: 8px;
+      
+      .eye {
+        width: 8px;
+        height: 8px;
+        background: #6c757d;
+        border-radius: 50%;
+        animation: blink 3s infinite;
+      }
+    }
+  }
+}
+
+// Animación de parpadeo para los ojos del robot
+@keyframes blink {
+  0%, 90%, 100% { opacity: 1; }
+  95% { opacity: 0; }
+}
+
+// Texto de saludo
+.greeting-text {
+  text-align: center;
+  
+  h2 {
+    color: #e8e9ea; // Color beige claro como en la imagen
+    font-size: 28px;
+    font-weight: 400;
+    margin: 0 0 8px 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .subtitle {
+    color: #b8c2cc; // Color gris claro para el subtítulo
+    font-size: 16px;
+    margin: 0;
+    font-weight: 300;
+  }
+}
+
+// Área donde aparecen los mensajes del chat
+.messages-area {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px 0;
+  margin-bottom: 20px;
+  
+  // Estilos para los mensajes individuales
+  .message {
+    margin-bottom: 15px;
+    display: flex;
+    
+    &.user {
+      justify-content: flex-end;
+      
+      .message-content {
+        background: #007bff;
+        color: white;
+        border-radius: 18px 18px 4px 18px;
+        max-width: 70%;
+      }
+    }
+    
+    &.bot {
+      justify-content: flex-start;
+      
+      .message-content {
+        background: #f1f3f4;
+        color: #333;
+        border-radius: 18px 18px 18px 4px;
+        max-width: 70%;
+      }
+    }
+    
+    .message-content {
+      padding: 12px 16px;
+      
+      p {
+        margin: 0;
+        font-size: 16px;
+        line-height: 1.4;
+      }
+      
+      .message-image {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+        margin-top: 8px;
+      }
+    }
+  }
+}
+
+// Contenedor del input fijo en la parte inferior
+.input-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #3a4a5c; // Mismo fondo que el contenedor principal
+  padding: 15px 20px 20px 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+// Wrapper del input con todos los elementos
+.input-wrapper {
+  display: flex;
+  align-items: center;
+  background: #d4b5a0; // Color beige/marrón claro como en la imagen
+  border-radius: 25px;
+  padding: 4px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+// Campo de texto para escribir mensajes
+.message-input {
+  flex: 1;
+  --background: transparent;
+  --color: #5a4a3a; // Color de texto oscuro para contraste
+  --placeholder-color: #8a7a6a; // Color del placeholder
+  --border-width: 0;
+  --inner-padding-start: 16px;
+  --inner-padding-end: 8px;
+  font-size: 16px;
+  
+  ion-input {
+    --background: transparen !important;
+    --color: #5a4a3a !important;
+  }
+}
+
+// Botón de cámara/adjuntar
+.attach-button {
+  --background: transparent;
+  --color: #6c757d;
+  margin: 0 4px;
+  min-height: 40px;
+  min-width: 40px;
+  
+  .camera-icon {
+    font-size: 20px;
+    color: #6c757d;
+  }
+}
+
+// Botón de enviar
+.send-button {
+  background: #4a5568; // Color gris oscuro como en la imagen
+  color: white;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 8px 16px;
+  margin: 0;
+  text-transform: none;
+  min-height: 36px;
+  
+  &:disabled {
+    opacity: 0.5;
+  }
+  
+  &:hover:not(:disabled) {
+    background: #2d3748;
+  }
+}
+
+// Scrollbar personalizado para el área de mensajes
+.messages-area::-webkit-scrollbar {
+  width: 4px;
+}
+
+.messages-area::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.messages-area::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 2px;
+}
+
+// Responsive para pantallas más pequeñas
+@media (max-width: 480px) {
+  .bot-greeting {
+    margin-top: 40px;
+    margin-bottom: 30px;
+  }
+  
+  .greeting-text h2 {
+    font-size: 24px;
+  }
+  
+  .greeting-text .subtitle {
+    font-size: 14px;
+  }
+  
+  .input-container {
+    padding: 12px 15px 15px 15px;
+  }
+}
