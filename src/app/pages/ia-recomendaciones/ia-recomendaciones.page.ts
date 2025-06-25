@@ -242,30 +242,37 @@ export class IaRecomendacionesPage {
     }
   }
 
-  // 🔥 FUNCIÓN ACTUALIZADA PARA PROCESAR IMÁGENES CON IA REAL
-  private async processImageMessage(imageData: string): Promise<void> {
-    this.isProcessing = true;
-    
-    // Mostrar indicador de carga
-    const loading = await this.loadingController.create({
-      message: 'Analizando tu rostro con IA...',
-      spinner: 'lines'
-    });
-    await loading.present();
+  
+private async processImageMessage(imageData: string): Promise<void> {
+  this.isProcessing = true;
 
-    try {
-      // ✨ LLAMADA REAL A LA IA PARA ANÁLISIS DE IMAGEN
-      const response = await this.iaService.analyzeImage(imageData);
-      this.addBotMessage(response.message);
-      
-    } catch (error) {
-      console.error('Error analizando imagen:', error);
-      this.addBotMessage('Lo siento, hubo un error analizando tu imagen. Asegúrate de que la foto muestre claramente tu rostro e intenta de nuevo. 📷');
-    } finally {
-      await loading.dismiss();
-      this.isProcessing = false;
-    }
+  // Mostrar indicador de carga
+  const loading = await this.loadingController.create({
+    message: 'Simulando análisis de rostro ovalado...',
+    spinner: 'lines'
+  });
+  await loading.present();
+
+  try {
+    
+    const prompt = `
+      Soy un barbero profesional. Recibí la foto de un cliente con rostro ovalado.
+      ¿Qué tres cortes de cabello modernos le recomendarías para resaltar sus rasgos?
+      Describe cada corte y explica por qué le queda bien. Responde en español.
+    `;
+
+    const response = await this.iaService.processTextMessage(prompt);
+    this.addBotMessage(response.message);
+
+  } catch (error) {
+    console.error('Error simulando análisis:', error);
+    this.addBotMessage('Lo siento, hubo un error simulando el análisis. Intenta nuevamente. 📷');
+  } finally {
+    await loading.dismiss();
+    this.isProcessing = false;
   }
+}
+
 
   // Función para agregar mensaje del usuario al chat
   private addUserMessage(text: string, image?: string): void {
