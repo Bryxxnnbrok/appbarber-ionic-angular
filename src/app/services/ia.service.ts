@@ -11,8 +11,9 @@ interface IARecommendation {
   providedIn: 'root'
 })
 export class IaService {
-  private readonly GEMINI_TEXT_URL = 'https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent';
-  private readonly GEMINI_VISION_URL = 'https://generativelanguage.googleapis.com/v1/models/gemini-pro-vision:generateContent';
+  // ✅ Endpoint actualizado según la documentación oficial
+  private readonly GEMINI_TEXT_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
+  private readonly GEMINI_VISION_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro-vision:generateContent';
   private readonly API_KEY = environment.geminiApiKey;
 
   private readonly FACE_ANALYSIS_PROMPT = `
