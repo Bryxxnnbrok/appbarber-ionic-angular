@@ -1,0 +1,230 @@
+// Estilos específicos para la página de selección de servicio
+.header {
+  position: sticky;
+  top: 0;
+  background-color: #384455;
+  padding: 16px;
+  z-index: 100;
+  box-shadow: rgba(0, 0, 0, 0.08) 0 2px 4px;
+
+  .category-select {
+    width: 100%;
+    background-color: #959EB2;
+    border-radius: 8px;
+    --background: #959EB2;
+    --color: #F5F5F5;
+    --placeholder-color: #F5F5F5;
+    --placeholder-opacity: 0.8;
+    padding: 10px;
+    font-family: 'Playfair Display', serif;
+  }
+}
+
+.services-container {
+  background-color: #384455;
+  padding: 16px;
+  min-height: calc(100% - 60px); // Altura del header
+
+  // Ocultar scrollbars manteniendo funcionalidad
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  padding-bottom: 20px;
+}
+
+.service-card {
+  background-color: #F5F5F5;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: rgba(105, 95, 95, 0.08) 0 2px 4px;
+  display: flex;
+  flex-direction: column;
+
+  .service-image {
+    height: 72px;
+    width: 72px;
+    overflow: hidden;
+    margin: 8px auto;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+  }
+
+  .service-info {
+    padding: 8px 12px 12px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+
+    .service-name {
+      color: #384455;
+      font-family: 'Playfair Display', serif;
+      font-size: 14px;
+      margin: 0 0 8px 0;
+      line-height: 1.2;
+      // Limitar a 2 líneas
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      height: 34px; // aprox. 2 líneas
+    }
+
+    .service-details {
+      display: flex;
+      flex-direction: column;
+      align-items: right;
+      gap: 2px;
+      margin-bottom: 10px;
+
+      .service-duration, .service-price {
+        font-size: 12px;
+        color: #384455;
+      }
+    }
+
+    .book-button {
+      --background: #384455;
+      --color: #F5F5F5;
+      --border-radius: 8px;
+      --box-shadow: none;
+      font-size: 12px;
+      height: 30px;
+      margin: 0;
+      text-transform: none;
+      font-family: 'Playfair Display', serif;
+    }
+  }
+}
+
+.empty-state {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+
+
+  p {
+    color: #F5F5F5;
+    font-family: 'Playfair Display', serif;
+    text-align: center;
+  }
+}
+
+// Dropdown personalizado (copiado de select-date)
+.custom-dropdown {
+  position: relative;
+  width: 100%;
+
+  .dropdown-button {
+    width: 100%;
+    height: 38px;
+    background: #ECE9E9;
+    border: 1px solid #B8B8B8;
+    border-radius: 12px;
+    padding: 0 30px 0 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    color: #384455;
+    transition: all 0.2s ease;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+
+    &:hover {
+      border-color: #999999;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: #384455;
+      box-shadow: 0 0 0 2px rgba(56, 68, 85, 0.2);
+    }
+
+    .dropdown-text {
+      flex: 1;
+      text-align: left;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .dropdown-arrow {
+      position: absolute;
+      right: 8px;
+      width: 0;
+      height: 0;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 4px solid #384455;
+      transition: transform 0.2s ease;
+    }
+  }
+
+  &.open {
+    .dropdown-button {
+      border-color: #384455;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+      border-top-left-radius: 12px;
+      border-top-right-radius: 12px;
+
+      .dropdown-arrow {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #ECE9E9B8;
+    border: 1px solid #384455;
+    border-top: none;
+    border-radius: 0 0 12px 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    max-height: 150px;
+    overflow-y: auto;
+
+    .dropdown-item {
+      padding: 8px 10px;
+      color: #384455;
+      font-family: 'Playfair Display', serif;
+      font-size: 13px;
+      cursor: pointer;
+      transition: background-color 0.15s ease;
+      border-bottom: 1px solid #D0D0D0;
+
+      &:hover {
+        background-color: #F5F5F5;
+      }
+
+      &:last-child {
+        border-bottom: none;
+        border-radius: 0 0 12px 12px;
+      }
+
+      &:first-child {
+        margin-top: 0;
+      }
+    }
+  }
+}
+

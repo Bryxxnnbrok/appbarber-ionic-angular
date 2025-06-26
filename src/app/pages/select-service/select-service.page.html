@@ -1,0 +1,46 @@
+<div class="header">
+  <!-- Dropdown personalizado para categorías -->
+  <div class="custom-dropdown" [class.open]="isDropdownOpen">
+    <div class="dropdown-button" (click)="toggleDropdown()">
+      <span class="dropdown-text">{{ selectedCategory || 'Seleccionar categoría...' }}</span>
+      <span class="dropdown-arrow">▼</span>
+    </div>
+    <div class="dropdown-menu" *ngIf="isDropdownOpen">
+      <div
+        *ngFor="let category of categories"
+        class="dropdown-item"
+        (click)="selectCategory(category)">
+        {{ category }}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="services-container">
+  <!-- Grid de servicios en 2 columnas -->
+  <div class="services-grid">
+    <div class="service-card" *ngFor="let service of filteredServices">
+      <div class="service-info">
+        <h3 class="service-name">{{ service.nombre }}</h3>
+        <div class="service-image">
+          <img [src]="service.img" alt="{{ service.nombre }}">
+        </div>
+        <div class="service-details">
+          <span class="service-duration">{{ service.duracionMin }} min</span>
+          <span class="service-price">S/ {{ service.precio.toFixed(2) }}</span>
+        </div>
+        <ion-button
+          class="book-button"
+          (click)="selectService(service)"
+          (keyup.enter)="selectService(service)">
+          Agendar servicio
+        </ion-button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Mensaje si no hay servicios en la categoría seleccionada -->
+<div class="empty-state" *ngIf="filteredServices.length === 0">
+  <p>No hay servicios disponibles en esta categoría.</p>
+</div>

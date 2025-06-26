@@ -1,0 +1,192 @@
+// Estilos específicos para la página de confirmación de reserva
+.hero-image {
+  width: 100%;
+  height: 220px;
+  background: url('/assets/images/barber.jpg') no-repeat center center;
+  background-size: cover;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+}
+
+.content-container {
+  background-color: #384455;
+  padding: 20px;
+  min-height: calc(100% - 220px); // Restar altura del hero
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.confirmation-card {
+  background-color: #FFFFFF;
+  border-radius: 8px;
+  padding: 24px;
+  width: 85%;
+  max-width: 350px;
+  box-shadow: rgba(0, 0, 0, 0.08) 0 2px 4px;
+  text-align: center;
+
+  .service-name {
+    font-family: 'Playfair Display', serif;
+    color: #384455;
+    font-size: 20px;
+    margin: 0 0 16px 0;
+  }
+
+  .booking-date,
+  .booking-time {
+    font-family: 'Playfair Display', serif;
+    color: #384455;
+    margin: 8px 0;
+    font-size: 16px;
+  }
+
+  .separator {
+    height: 1px;
+    background-color: #ECE9E9;
+    margin: 16px 0;
+  }
+
+  .price {
+    font-family: 'Playfair Display', serif;
+    color: #384455;
+    font-size: 22px;
+    font-weight: bold;
+    margin: 16px 0 24px;
+  }
+
+  .confirm-button {
+    --background: #D5C2BD;
+    --color: #384455;
+    --border-radius: 8px;
+    --box-shadow: rgba(0, 0, 0, 0.08) 0 2px 4px;
+    font-family: 'Playfair Display', serif;
+    width: 100%;
+    margin: 0;
+    text-transform: none;
+
+    &[disabled] {
+      --background: #E8E8E8;
+      --color: #999;
+      opacity: 0.7;
+    }
+
+    .button-spinner {
+      --color: #384455;
+      margin-right: 8px;
+      width: 16px;
+      height: 16px;
+    }
+  }
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+
+  p {
+    color: #F5F5F5;
+    font-family: 'Playfair Display', serif;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  ion-button {
+    --background: #D5C2BD;
+    --color: #384455;
+    --border-radius: 8px;
+    font-family: 'Playfair Display', serif;
+  }
+}
+
+// Estilos para el loading personalizado
+::ng-deep .custom-loading {
+  --background: rgba(56, 68, 85, 0.9);
+  --color: #F5F5F5;
+
+  .loading-wrapper {
+    --background: rgba(56, 68, 85, 0.95);
+    --color: #F5F5F5;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .loading-content {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+  }
+
+  .loading-spinner {
+    --color: #D5C2BD;
+  }
+}
+
+// Estilos para el toast personalizado
+::ng-deep .custom-toast {
+  --background: #FFFFFF;
+  --color: #384455;
+  --border: 1px solid #D5C2BD;
+  --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+  .toast-wrapper {
+    border-radius: 12px;
+    font-family: 'Playfair Display', serif;
+    padding: 16px;
+  }
+
+  .toast-message {
+    font-size: 15px;
+    line-height: 1.4;
+  }
+
+  .toast-button {
+    --color: #384455;
+    --background: transparent;
+    font-family: 'Playfair Display', serif;
+    font-weight: 500;
+    text-transform: none;
+
+    &.toast-button-cancel {
+      --color: #888;
+    }
+  }
+
+  &.toast-color-success {
+    --background: #F0F8F0;
+    --border: 1px solid #4CAF50;
+
+    .toast-message {
+      color: #2E7D32;
+    }
+
+    .toast-button {
+      --color: #4CAF50;
+    }
+  }
+
+  &.toast-color-danger {
+    --background: #FFF5F5;
+    --border: 1px solid #F44336;
+
+    .toast-message {
+      color: #C62828;
+    }
+
+    .toast-button {
+      --color: #F44336;
+    }
+  }
+}

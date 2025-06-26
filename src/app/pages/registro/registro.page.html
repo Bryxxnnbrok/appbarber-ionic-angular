@@ -1,0 +1,126 @@
+<ion-content class="registro-content">
+  <div class="registro-container">
+    <!-- Logo -->
+    <div class="logo-container">
+      <img src="assets/images/logo-barberia.png" alt="Logo" class="logo" />
+    </div>
+
+    <!-- Título -->
+    <ion-text>
+      <h1 class="registro-title">Registrarme</h1>
+    </ion-text>
+
+    <!-- Formulario -->
+    <form class="registro-form">
+      <!-- Campo Nombre -->
+      <div class="input-group">
+        <ion-input
+          [(ngModel)]="nombre"
+          name="nombre"
+          type="text"
+          placeholder="nombre"
+          class="custom-input"
+          fill="outline"
+          [clearInput]="true">
+        </ion-input>
+      </div>
+
+      <!-- Campo Email -->
+      <div class="input-group">
+        <ion-input
+          [(ngModel)]="email"
+          name="email"
+          type="email"
+          placeholder="gmail"
+          class="custom-input"
+          fill="outline"
+          [clearInput]="true">
+        </ion-input>
+      </div>
+
+      <!-- Campo Celular -->
+      <div class="input-group">
+        <ion-input
+          [(ngModel)]="celular"
+          name="celular"
+          type="tel"
+          placeholder="celular"
+          class="custom-input"
+          fill="outline"
+          [clearInput]="true">
+        </ion-input>
+      </div>
+
+      <!-- Campo Contraseña -->
+      <div class="input-group password-group">
+        <ion-input
+          [(ngModel)]="password"
+          name="password"
+          [type]="mostrarPassword ? 'text' : 'password'"
+          placeholder="contraseña"
+          class="custom-input"
+          fill="outline"
+          [clearInput]="false">
+          <ion-button
+            slot="end"
+            fill="clear"
+            size="small"
+            (click)="togglePasswordVisibility('password')"
+            class="password-toggle-btn">
+            <ion-icon
+              [name]="mostrarPassword ? 'eye-off' : 'eye'"
+              class="password-toggle">
+            </ion-icon>
+          </ion-button>
+        </ion-input>
+      </div>
+
+      <!-- Campo Confirmar Contraseña -->
+      <div class="input-group password-group">
+        <ion-input
+          [(ngModel)]="confirmarPassword"
+          name="confirmarPassword"
+          [type]="mostrarConfirmarPassword ? 'text' : 'password'"
+          placeholder="confirmar contraseña"
+          class="custom-input"
+          fill="outline"
+          [clearInput]="false">
+          <ion-button
+            slot="end"
+            fill="clear"
+            size="small"
+            (click)="togglePasswordVisibility('confirmPassword')"
+            class="password-toggle-btn">
+            <ion-icon
+              [name]="mostrarConfirmarPassword ? 'eye-off' : 'eye'"
+              class="password-toggle">
+            </ion-icon>
+          </ion-button>
+        </ion-input>
+      </div>
+
+      <!-- Botón Registrarme -->
+      <ion-button
+        expand="block"
+        type="submit"
+        class="registro-button"
+        (click)="registrarse()"
+        [disabled]="isLoading">
+        <span *ngIf="!isLoading">Registrarme</span>
+        <ion-spinner *ngIf="isLoading" name="circular"></ion-spinner>
+      </ion-button>
+
+      <!-- Enlace Login -->
+      <div class="login-link">
+        <ion-text class="login-text">¿Ya tienes cuenta? </ion-text>
+        <ion-button 
+          fill="clear" 
+          size="small"
+          (click)="irALogin()" 
+          class="login-link-btn">
+          <ion-text class="login-link-text">Iniciar Sesión</ion-text>
+        </ion-button>
+      </div>
+    </form>
+  </div>
+</ion-content>
