@@ -65,11 +65,15 @@
   margin-bottom: 40px;
 }
 
-// Avatar del robot con diseño personalizado
+
+// Avatar del bot con imagen personalizada
 .bot-avatar {
   width: 80px;
   height: 80px;
-  background: #e8e9ea; // Fondo gris claro como en la imagen
+    // Elimina el fondo y sombra del contenedor
+  background: transparent !important;
+  box-shadow: none !important;
+
   border-radius: 20px;
   display: flex;
   align-items: center;
@@ -77,36 +81,21 @@
   position: relative;
   margin-bottom: 20px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  overflow: hidden; // Para que la imagen no sobresalga del borde
   
-  // Icono principal del robot
-  .robot-icon {
-    font-size: 32px;
-    color: #6c757d;
-    position: absolute;
-    bottom: 10px;
+  .bot-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; // Asegura que la imagen cubra todo el espacio
   }
   
-  // Cara del robot con ojos
-  .bot-face {
-    position: absolute;
-    top: 15px;
-    left: 50%;
-    transform: translateX(-50%);
-    
-    .bot-eyes {
-      display: flex;
-      gap: 8px;
-      
-      .eye {
-        width: 8px;
-        height: 8px;
-        background: #6c757d;
-        border-radius: 50%;
-        animation: blink 3s infinite;
-      }
-    }
+  // Elimina estos estilos si ya no los necesitas
+  .robot-icon, .bot-face {
+    display: none;
   }
 }
+  
+
 
 // Animación de parpadeo para los ojos del robot
 @keyframes blink {

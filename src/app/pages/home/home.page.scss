@@ -57,7 +57,7 @@
     font-size: 24px;
     
     ion-icon {
-      color: var rgba(65, 69, 106, 0.9);
+      color: rgba(65, 69, 106, 0.9);
     }
   }
 }
@@ -105,7 +105,6 @@
     padding-bottom: 10px;
     scroll-behavior: smooth;
     
-    // Ocultar scrollbar
     &::-webkit-scrollbar {
       display: none;
     }
@@ -178,12 +177,12 @@
     
     ion-icon {
       font-size: 20px;
-      color: var rgba(65, 69, 106, 0.9);
+      color: rgba(65, 69, 106, 0.9);
     }
   }
 }
 
-// Botones de acción
+// Botones de acción (¡CAMBIOS AQUÍ!)
 .action-buttons {
   padding: 30px 16px 40px;
   display: flex;
@@ -203,30 +202,48 @@
   }
   
   .ai-button {
-    --background: rgba(65, 69, 106, 0.9);
-    --color:#D5C2BD;
-    width: 50px;
-    height: 50px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    --background: transparent;
+    box-shadow: none !important;
+    --padding-start: 0;
+    --padding-end: 0;
+    width: 70px;
+    height: 70px;
+    margin: 0;
     position: relative;
+    animation: float 3s ease-in-out infinite;
     
-    // Indicador de AI
+    .ai-avatar {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 50%;
+  background: transparent !important;
+  box-shadow: none !important;
+      transition: transform 0.3s ease;
+    }
+    
+    &:active .ai-avatar {
+      transform: scale(0.95);
+    }
+    
+    // Indicador de IA activo
     &::after {
       content: '';
       position: absolute;
-      top: -2px;
-      right: -2px;
+      top: 5px;
+      right: 5px;
       width: 12px;
       height: 12px;
       background: #48bb78;
       border-radius: 50%;
       border: 2px solid var(--background-dark);
+      z-index: 10;
     }
-    
-    ion-icon {
-      font-size: 24px;
-      color: var(--button-text);
-    }
+  }
+  
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
   }
 }
 
@@ -294,5 +311,11 @@ ion-menu {
       width: 35px;
       height: 35px;
     }
+  }
+  
+  // Ajuste para móvil del botón de IA
+  .action-buttons .ai-button {
+    width: 60px;
+    height: 60px;
   }
 }
