@@ -22,10 +22,7 @@ export const routes: Routes = [
     path: 'home',
     loadComponent: () => import('./pages/home/home.page').then(m => m.HomePage)
   },
-      {
-    path: 'reserva',
-    loadComponent: () => import('./pages/reserva/reserva.page').then(m => m.ReservaPage)
-  },
+
         {
     path: 'catalogo-servicios',
     loadComponent: () => import('./pages/catalogo-servicios/catalogo-servicios.page').then(m => m.CatalogoServiciosPage)
@@ -39,7 +36,20 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/perfil/perfil.page').then(m => m.PerfilPage)
   },
   {
+    path: 'cortes-de-cabello',
+    loadComponent: () => import('./pages/cortes-de-cabello/cortes-de-cabello.page').then( m => m.CortesDeCabelloPage)
+  },
+  {
+    path: 'limpieza-facial',
+    loadComponent: () => import('./pages/limpieza-facial/limpieza-facial.page').then( m => m.LimpiezaFacialPage)
+  },
+  {
+    path: 'arreglo-de-barba',
+    loadComponent: () => import('./pages/arreglo-de-barba/arreglo-de-barba.page').then( m => m.ArregloDeBarbaPage)
+  },
+  {
     path: '**',
     redirectTo: 'bienvenida' // Cambiado a redirect en lugar de recargar el mismo componente
   }
+ 
 ];
