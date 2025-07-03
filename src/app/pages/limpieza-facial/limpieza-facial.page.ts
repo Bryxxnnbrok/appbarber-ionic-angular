@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule, CurrencyPipe } from '@angular/common'; // Agregamos CurrencyPipe
 import { FormsModule } from '@angular/forms';
 import {
@@ -6,26 +6,24 @@ import {
   IonHeader,
   IonTitle,
   IonToolbar,
-  IonButtons,    // <-- Añadido
-  IonMenuButton, // <-- Añadido
-  IonCard,       // <-- Añadido
-  IonItem,       // <-- Añadido
-  IonThumbnail,  // <-- Añadido
-  IonLabel,      // <-- Añadido
-  IonIcon,       // <-- Añadido
-  IonMenu,       // <-- Añadido
-  IonList        // <-- Añadido
+  IonButtons,
+  IonMenuButton,
+  IonCard,
+  IonItem,
+  IonThumbnail,
+  IonLabel,
+  IonIcon,
+  IonBackButton
 } from '@ionic/angular/standalone';
-import { Router } from '@angular/router';
-import { MenuController, AlertController} from '@ionic/angular/standalone';
+import { Router } from '@angular/router'; // Importar Router
 import { addIcons } from 'ionicons';
-import { 
-  menu, 
-  chevronForward, 
-  chatbubbleEllipses, 
-  person, 
-  time, 
-  logOut 
+import {
+  menu,
+  chevronForward,
+  chatbubbleEllipses,
+  person,
+  time,
+  logOut
 } from 'ionicons/icons';
 
 @Component({
@@ -41,19 +39,19 @@ import {
     IonToolbar,
     CommonModule,
     FormsModule,
-    IonButtons,    // <-- Añadido
-    IonMenuButton, // <-- Añadido
-    IonCard,       // <-- Añadido
-    IonItem,       // <-- Añadido
-    IonThumbnail,  // <-- Añadido
-    IonLabel,      // <-- Añadido
-    IonIcon,       // <-- Añadido
-    IonMenu,       // <-- Añadido
-    IonList,       // <-- Añadido
-    CurrencyPipe   // <-- Añadido para formatear el precio
-  ]
+    IonButtons,
+    IonMenuButton,
+    IonCard,
+    IonItem,
+    IonThumbnail,
+    IonLabel,
+    IonIcon,
+    CurrencyPipe,
+    IonBackButton
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class LimpiezaFacialPage implements OnInit {
+export class LimpiezaFacialPage {
 
   // Creamos el array con los datos de los cortes. El HTML usará esta variable.
   public listaDeCortes = [
@@ -61,39 +59,37 @@ export class LimpiezaFacialPage implements OnInit {
       categoria: 'Limpieza Facial Clásica',
       nombre: 'Eliminación de impurezas y puntos negros',
       precio: 30.00,
-      imagen: 'assets/images/corte-militar.jpg'
+      imagen: 'assets/images/facial_1.jpg'
     },
     {
       categoria: 'Limpieza Facial Profunda',
       nombre: 'Con extracción, vapor y mascarilla',
       precio: 45.00,
-      imagen: 'assets/images/corte-moderno.jpg'
+      imagen: 'assets/images/facial_2.jpg'
     },
     {
       categoria: 'Exfoliación Facial',
       nombre: 'Remueve células muertas, deja la piel suave',
       precio: 20.00,
-      imagen: 'assets/images/Corte_Pompadour.jpg'
+      imagen: 'assets/images/facial_3.jpg'
     },
     {
       categoria: 'Mascarilla Hidratante',
       nombre: 'Ideal para piel reseca o sensible',
       precio: 25.00,
-      imagen: 'assets/images/arreglo-barba.jpg'
+      imagen: 'assets/images/facial_4.jpg'
     },
         {
       categoria: 'Tratamiento Antiacné',
       nombre: 'Limpieza y control de brotes',
       precio: 35.00,
-      imagen: 'assets/images/arreglo-barba.jpg'
+      imagen: 'assets/images/facial_5.png'
     }
   ];
 
   constructor(
-    private router: Router,
-    private menuCtrl: MenuController,
-    private alertCtrl: AlertController
-  ) { 
+    private router: Router
+  ) {
 
     // Registrar los iconos que vamos a usar
     addIcons({
@@ -105,50 +101,4 @@ export class LimpiezaFacialPage implements OnInit {
       logOut
     });
   }
-
-  ngOnInit() {
-  }
-
-  // Métodos para el menú lateral
-  async openMenu() {
-    await this.menuCtrl.open('main-menu');
-  }
-
-  goToProfile() {
-    this.menuCtrl.close();
-    this.router.navigate(['/perfil']);
-  }
-
-  goToHistory() {
-    this.menuCtrl.close();
-    this.router.navigate(['/perfil'], { queryParams: { section: 'historial' } });
-  }
-
-  async logout() {
-    const alert = await this.alertCtrl.create({
-      header: 'Cerrar Sesión',
-      message: '¿Estás seguro que deseas cerrar sesión?',
-      buttons: [
-        {
-          text: 'Cancelar',
-          role: 'cancel'
-        },
-        {
-          text: 'Cerrar Sesión',
-          handler: () => {
-            this.performLogout();
-          }
-        }
-      ]
-    });
-
-    await alert.present();
-  }
-
-  private performLogout() {
-    // Aquí puedes limpiar datos de sesión si usas autenticación
-    this.menuCtrl.close();
-    this.router.navigate(['/bienvenida'], { replaceUrl: true });
-  }
-
 }

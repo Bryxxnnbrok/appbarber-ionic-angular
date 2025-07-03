@@ -63,9 +63,8 @@ export class LoginPage {
     try {
       await this.authService.login(this.email, this.password);
       await this.mostrarToast('Inicio de sesión exitoso');
-      this.router.navigate(['/home']); // Puedes cambiar '/home' por otra ruta en el futuro
     } catch (error: any) {
-      await this.mostrarToast(this.getErrorMessage(error));
+      await this.mostrarToast(error.message);
     } finally {
       this.isLoading = false;
     }
@@ -78,7 +77,7 @@ export class LoginPage {
       const userName = result.user.displayName || 'Usuario';
       await this.mostrarToast(`¡Bienvenido ${userName}!`);
     } catch (error: any) {
-      await this.mostrarToast(this.getErrorMessage(error, 'Google'));
+      await this.mostrarToast(error.message);
     } finally {
       this.isGoogleLoading = false;
     }
@@ -101,23 +100,5 @@ export class LoginPage {
       buttons: [{ text: 'OK', role: 'cancel' }]
     });
     await toast.present();
-  }
-
-  private getErrorMessage(error: any, provider: string = ''): string {
-    if (error.code) {
-      switch (error.code) {
-        case 'auth/invalid-email': return 'Email inválido';
-        case 'auth/user-disabled': return 'Cuenta deshabilitada';
-        case 'auth/user-not-found': return 'Usuario no encontrado';
-        case 'auth/wrong-password': return 'Contraseña incorrecta';
-        case 'auth/popup-closed-by-user': return 'Cancelaste el inicio con Google';
-        case 'auth/account-exists-with-different-credential':
-          return 'Este email ya está registrado con otro método';
-        case 'auth/network-request-failed':
-          return 'Error de conexión. Verifica tu internet';
-        default: return `Error al iniciar sesión${provider ? ' con ' + provider : ''}`;
-      }
-    }
-    return error.message || `Error al iniciar sesión${provider ? ' con ' + provider : ''}`;
   }
 }

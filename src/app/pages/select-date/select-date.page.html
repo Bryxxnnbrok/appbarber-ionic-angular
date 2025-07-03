@@ -1,0 +1,161 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Seleccionar Fecha y Hora</ion-title>
+    <ion-buttons slot="end">
+      <ion-menu-button auto-hide="false" menu="main-menu" side="end"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="content-container">
+    <!-- Imagen hero dentro del contenedor scrolleable -->
+    <div class="hero-image">
+    </div>
+
+    <!-- Título principal -->
+    <h1 class="main-title">Reserve su cita!</h1>
+
+    <!-- Contenedor interno para las secciones -->
+    <div class="content-inner">
+      <!-- Sección de selección de fecha -->
+      <div class="section">
+        <h2>seleccionar día</h2>
+
+        <!-- Calendario personalizado simplificado como en Figma -->
+        <div class="figma-calendar">
+          <!-- Cabecera del calendario -->
+          <div class="calendar-header">
+            <button class="nav-btn" (click)="previousMonth()">&lt;</button>
+            <div class="month-year">{{currentMonthDisplay}}</div>
+            <button class="nav-btn" (click)="nextMonth()">&gt;</button>
+          </div>
+
+          <!-- Versión simplificada del calendario para mejor control visual -->
+          <div class="calendar-grid">
+            <!-- Días de la semana -->
+            <div class="weekday-row">
+              <div class="weekday">L</div>
+              <div class="weekday">M</div>
+              <div class="weekday">M</div>
+              <div class="weekday">J</div>
+              <div class="weekday">V</div>
+              <div class="weekday">S</div>
+              <div class="weekday">D</div>
+            </div>
+
+            <!-- Días del mes - se generarán dinámicamente -->
+            <div class="days-grid">
+              <div
+                *ngFor="let day of calendarDays"
+                class="day-cell"
+                [class.selected]="isSelectedDay(day)"
+                [class.today]="isToday(day)"
+                [class.other-month]="!isSameMonth(day)"
+                (click)="selectDay(day)"
+                (keydown)="$event.key === 'Enter' ? selectDay(day) : null">
+                {{ day.getDate() }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Calendario original oculto para mantener la funcionalidad -->
+        <ion-datetime
+          #dateSelect
+          presentation="date"
+          [min]="minDate"
+          locale="es-ES"
+          (ionChange)="onDateChange($event)"
+          [showDefaultButtons]="false"
+          class="hidden-calendar">
+        </ion-datetime>
+      </div>
+
+      <!-- Sección de selección de hora -->
+      <div class="section">
+        <h2>seleccionar hora</h2>
+        <div class="wheel-time-picker">
+          <div class="picker-container">
+            <!-- Indicador central -->
+            <div class="selection-indicator">
+              <div class="indicator-line top"></div>
+              <div class="indicator-line bottom"></div>
+            </div>
+
+            <!-- Ruedas de selección -->
+            <div class="wheel-columns">
+              <!-- Rueda de horas -->
+              <div class="wheel-column hours-wheel" (scroll)="onHourScroll($event)">
+                <div class="wheel-spacer"></div>
+                <div
+                  *ngFor="let hour of wheelHours; let i = index"
+                  class="wheel-item"
+                  [class.active]="selectedHourIndex === i"
+                  [attr.data-index]="i"
+                  (click)="selectHourByIndex(i)">
+                  {{ hour }}
+                </div>
+                <div class="wheel-spacer"></div>
+              </div>
+
+              <!-- Separador -->
+              <div class="wheel-separator">:</div>
+
+              <!-- Rueda de minutos -->
+              <div class="wheel-column minutes-wheel" (scroll)="onMinuteScroll($event)">
+                <div class="wheel-spacer"></div>
+                <div
+                  *ngFor="let minute of wheelMinutes; let i = index"
+                  class="wheel-item"
+                  [class.active]="selectedMinuteIndex === i"
+                  [attr.data-index]="i"
+                  (click)="selectMinuteByIndex(i)">
+                  {{ minute }}
+                </div>
+                <div class="wheel-spacer"></div>
+              </div>
+
+              <!-- Rueda AM/PM -->
+              <div class="wheel-column period-wheel" (scroll)="onPeriodScroll($event)">
+                <div class="wheel-spacer"></div>
+                <div
+                  *ngFor="let period of wheelPeriods; let i = index"
+                  class="wheel-item"
+                  [class.active]="selectedPeriodIndex === i"
+                  [attr.data-index]="i"
+                  (click)="selectPeriodByIndex(i)">
+                  {{ period }}
+                </div>
+                <div class="wheel-spacer"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Selector de categoría -->
+      <div class="section">
+        <div class="custom-dropdown" [class.open]="isDropdownOpen">
+          <div class="dropdown-button" (click)="toggleDropdown()">
+            <span class="dropdown-text">{{ selectedCategory || '¿Qué servicio buscas?...' }}</span>
+            <span class="dropdown-arrow">▼</span>
+          </div>
+          <div class="dropdown-menu" *ngIf="isDropdownOpen">
+            <div
+              *ngFor="let category of categories"
+              class="dropdown-item"
+              (click)="selectCategory(category)">
+              {{ category }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+</ion-content>

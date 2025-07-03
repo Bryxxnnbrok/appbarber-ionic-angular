@@ -1,0 +1,113 @@
+/* Estilos específicos para la página de perfil */
+app-perfil {
+  ion-content {
+    background-color: #ff0000 !important;
+  }
+
+  .profile-header {
+    background-color: #ffffff !important;
+    padding: 20px;
+    text-align: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+
+    .profile-avatar {
+      width: 100px;
+      height: 100px;
+      margin: 0 auto 15px;
+      border: 3px solid #4a5568 !important;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .profile-name {
+      color: #4a5568 !important;
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 5px;
+      letter-spacing: 0.5px;
+    }
+
+    .profile-email {
+      color: #666666 !important;
+      font-size: 0.9rem;
+      margin: 0;
+    }
+  }
+
+  ion-segment {
+    background-color: #ffffff !important;
+    border-radius: 8px;
+    margin: 15px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.05) !important;
+
+    ion-segment-button {
+      --color: #666666 !important;
+      --color-checked: #4a5568 !important;
+      --indicator-color: transparent !important;
+      font-weight: 500;
+      min-height: 40px;
+
+      &.segment-button-checked {
+        background-color: rgba(212, 184, 150, 0.2) !important;
+      }
+    }
+  }
+
+  ion-list {
+    background-color: #ffffff !important;
+    margin: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+
+    ion-item {
+      --min-height: 56px !important;
+      --padding-start: 16px !important;
+      --padding-end: 16px !important;
+      --border-color: rgba(0, 0, 0, 0.05) !important;
+
+      ion-icon {
+        color: #4a5568 !important;
+        font-size: 1.1rem;
+        margin-right: 12px;
+      }
+
+      ion-label {
+        color: #666666 !important;
+        font-size: 0.9rem;
+      }
+
+      ion-text {
+        color: #000000 !important;
+        font-weight: 500;
+      }
+    }
+  }
+
+  .empty-history {
+    text-align: center;
+    padding: 40px 20px;
+
+    ion-icon {
+      color: #d4b896 !important;
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+    }
+
+    p {
+      color: #666666 !important;
+      font-size: 0.95rem;
+    }
+  }
+
+  h2 {
+    color: #4a5568 !important;
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+
+  h3 {
+    color: #4a5568 !important;
+    font-size: 1.1rem;
+    font-weight: 500;
+  }
+}

@@ -96,5 +96,4 @@ export class BienvenidaPage implements OnInit {
   ionViewWillLeave() {
     console.log('BienvenidaPage will leave');
   }
-
 }

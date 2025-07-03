@@ -1,0 +1,36 @@
+<ion-header [translucent]="true" class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+
+    <ion-title>
+      Arreglo de Cejas
+    </ion-title>
+
+    <ion-buttons slot="end">
+      <ion-menu-button auto-hide="false" menu="main-menu" side="end"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-card *ngFor="let corte of listaDeCortes" class="fade-in-item">
+    <ion-item lines="none">
+      <ion-thumbnail slot="start">
+        <img [src]="corte.imagen" alt="Foto de {{corte.nombre}}">
+      </ion-thumbnail>
+
+      <ion-label>
+        <h2 class="category-title">{{corte.categoria}}</h2>
+        <p class="name-text">{{corte.nombre}}</p>
+        <p class="price-text">{{corte.precio | currency:'S/'}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-card>
+
+  <div class="scroll-indicator">
+    <ion-icon name="chevron-down-outline"></ion-icon>
+  </div>
+</ion-content>
+

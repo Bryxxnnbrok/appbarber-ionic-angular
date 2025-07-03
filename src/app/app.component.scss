@@ -1,0 +1,47 @@
+ion-menu {
+  --width: 280px; /* Ajustar ancho del menú para un look más estilizado */
+}
+
+ion-menu ion-header {
+  ion-toolbar {
+    --background: #1A202C; /* Fondo oscuro para el encabezado del menú */
+    --color: #F7FAFC; /* Color de texto claro */
+    --border-width: 0; /* Sin borde */
+    box-shadow: none; /* Sin sombra */
+  }
+}
+
+ion-menu ion-content {
+  --background: #2D3748; /* Fondo oscuro ligeramente más claro para el contenido del menú */
+}
+
+ion-menu ion-list {
+  background: transparent; /* Asegurar que el fondo de la lista sea transparente */
+}
+
+ion-menu ion-item {
+  --background: transparent; /* Fondo transparente para los ítems */
+  --color: #CBD5E0; /* Color de texto gris claro */
+  --ripple-color: rgba(160, 174, 192, 0.3); /* Efecto de onda sutil */
+  transition: background-color 0.2s ease-in-out; /* Transición suave para hover/active */
+
+  ion-icon {
+    color: #A0AEC0; /* Color gris azulado claro para los iconos */
+    transition: transform 0.2s ease-in-out; /* Animación sutil del icono */
+  }
+
+  ion-label {
+    font-weight: 500; /* Texto ligeramente más negrita para los ítems del menú */
+  }
+
+  &:hover, &:focus {
+    --background: rgba(255, 255, 255, 0.08); /* Resaltado sutil al pasar el ratón/enfocar */
+  }
+
+  &:active {
+    --background: rgba(255, 255, 255, 0.15); /* Resaltado más pronunciado al activar */
+    ion-icon {
+      transform: translateX(5px); /* Mover el icono ligeramente al activar */
+    }
+  }
+}

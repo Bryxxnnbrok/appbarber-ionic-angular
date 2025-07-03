@@ -1,89 +1,72 @@
-<!-- Contenedor principal con fondo oscuro -->
-<ion-content [fullscreen]="true" class="main-content">
-  
-  <!-- Header con logo y menú hamburguesa -->
-  <div class="header-container">
-    <!-- Logo circular con imagen de barbería -->
-    <div class="logo-container">
-      <img src="assets/images/logo-barberia.png" alt="Logo Barbería" class="logo-image">
-    </div>
-    
-    <!-- Botón menú hamburguesa -->
-    <ion-button fill="clear" class="menu-button" (click)="toggleMenu()">
-      <ion-icon name="menu" class="menu-icon"></ion-icon>
-    </ion-button>
-  </div>
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Asistente IA</ion-title>
+  </ion-toolbar>
+</ion-header>
 
-  <!-- Contenedor del chat -->
+<ion-content [fullscreen]="true" class="ion-padding">
   <div class="chat-container">
-    
-    <!-- Avatar del bot y saludo -->
-    <div class="bot-greeting">
-      <!-- Avatar del robot -->
-<!-- Avatar del bot con imagen personalizada -->
-<div class="bot-avatar">
-  <img src="assets/images/chatbott.png" alt="Avatar BarberBot" class="bot-image">
-</div>
-      
-      <!-- Mensaje de saludo -->
-      <div class="greeting-text">
-        <h2>Hola, soy barberbot</h2>
-        <p class="subtitle">prueba tu estilo con IA ✨</p>
+    <!-- Contenedor del estado inicial (logo y saludo) -->
+    <div *ngIf="messages.length <= 1" class="initial-state-container">
+      <div class="logo-wrapper">
+        <img src="assets/images/logo-barberia.png" alt="Logo Barbería" class="logo-image">
+      </div>
+      <div class="bot-greeting">
+        <h1 class="greeting-title">Hola, soy <strong>BarberBot</strong></h1>
+        <p class="greeting-subtitle">Tu asistente para encontrar el estilo perfecto. ¿En qué puedo ayudarte hoy?</p>
       </div>
     </div>
 
-    <!-- Área de mensajes del chat (aquí se mostrarán las conversaciones) -->
+    <!-- Área de mensajes del chat -->
     <div class="messages-area" #messagesArea>
-      <!-- Los mensajes aparecerán aquí dinámicamente -->
-      <div *ngFor="let message of messages" class="message" [ngClass]="message.type">
-        <div class="message-content">
-          <p>{{ message.text }}</p>
-          <!-- Si el mensaje contiene una imagen -->
-          <img *ngIf="message.image" [src]="message.image" alt="Imagen enviada" class="message-image">
+      <div *ngFor="let message of messages" class="message-wrapper" [ngClass]="message.type">
+        <!-- Mensaje del Bot -->
+        <div *ngIf="message.type === 'bot'" class="message-content bot">
+          <div class="avatar-wrapper">
+            <img src="assets/images/chatbott.png" alt="Avatar" class="bot-avatar">
+          </div>
+          <div class="text-wrapper">
+            <p [innerHTML]="message.text"></p>
+          </div>
+        </div>
+        
+        <!-- Mensaje del Usuario -->
+        <div *ngIf="message.type === 'user'" class="message-content user">
+          <div class="text-wrapper">
+            <p [innerHTML]="message.text"></p>
+            <img *ngIf="message.image" [src]="message.image" alt="Imagen enviada" class="message-image">
+          </div>
         </div>
       </div>
     </div>
-
   </div>
-
-  <!-- Input area fija en la parte inferior -->
-  <div class="input-container">
-    
-    <!-- Campo de texto para escribir mensajes -->
-    <div class="input-wrapper">
-      <ion-input
-        [(ngModel)]="messageText"
-        placeholder="Escribe....."
-        class="message-input"
-        (keypress)="onKeyPress($event)"
-        fill="outline">
-      </ion-input>
-      
-      <!-- Botón para adjuntar imagen/cámara -->
-      <ion-button 
-        fill="clear" 
-        class="attach-button" 
-        (click)="selectImage()">
-        <ion-icon name="camera" class="camera-icon"></ion-icon>
-      </ion-button>
-      
-      <!-- Botón enviar -->
-      <ion-button 
-        class="send-button" 
-        (click)="sendMessage()"
-        [disabled]="!messageText.trim() && !selectedImage">
-        enviar
-      </ion-button>
-    </div>
-
-  </div>
-
-  <!-- Input file oculto para seleccionar imágenes -->
-  <input 
-    type="file" 
-    #fileInput 
-    accept="image/*" 
-    (change)="onFileSelected($event)" 
-    style="display: none;">
-
 </ion-content>
+
+<ion-footer class="ion-no-border">
+  <div class="input-container">
+    <ion-button fill="clear" class="attach-button" (click)="selectImage()">
+      <ion-icon name="camera-outline" slot="icon-only"></ion-icon>
+    </ion-button>
+    <ion-textarea
+      [(ngModel)]="messageText"
+      placeholder="Escribe un mensaje..."
+      class="message-input"
+      (keydown)="onKeyPress($event)"
+      auto-grow="true">
+    </ion-textarea>
+    <ion-button class="send-button" (click)="sendMessage()" [disabled]="!messageText.trim() && !selectedImage">
+      <ion-icon name="send-outline" slot="icon-only"></ion-icon>
+    </ion-button>
+  </div>
+</ion-footer>
+
+<!-- Input file oculto -->
+<input 
+  type="file" 
+  #fileInput 
+  accept="image/*" 
+  (change)="onFileSelected($event)" 
+  style="display: none;">

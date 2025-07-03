@@ -22,12 +22,13 @@ import {
   addDoc,
   query,
   where,
-  getDocs
+  getDocs,
+  Timestamp // Importar Timestamp
 } from '@angular/fire/firestore';
 
 import { Router } from '@angular/router';
 import { UserCredential } from 'firebase/auth';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs'; // Importar BehaviorSubject
 
 // 📦 Interfaz para los datos del usuario
 export interface UserData {
@@ -35,8 +36,8 @@ export interface UserData {
   email: string;
   nombre: string;
   telefono?: string;
-  createdAt: Date;
-  ultimaReserva?: Date;
+  createdAt: Date | Timestamp; // Puede ser Date o Timestamp
+  ultimaReserva?: Date | Timestamp; // Puede ser Date o Timestamp
 }
 
 // 📦 Interfaz para las reservas
@@ -44,16 +45,25 @@ export interface Reserva {
   id?: string;
   usuarioId: string;
   servicio: string;
-  fecha: Date;
+  fecha: Date | Timestamp; // Puede ser Date o Timestamp
   hora: string;
   precio: number;
   estado: 'pendiente' | 'confirmada' | 'cancelada';
-  createdAt: Date;
+  createdAt: Date | Timestamp; // Puede ser Date o Timestamp
+}
+
+// Función auxiliar para convertir Timestamp de Firestore a Date de JavaScript
+function convertFirestoreTimestampToDate(timestamp: any): Date {
+  if (timestamp instanceof Timestamp) {
+    return timestamp.toDate();
+  }
+  return timestamp; // Si ya es Date o null, devolverlo tal cual
 }
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private currentUser: User | null = null;
+  private authState = new BehaviorSubject<User | null>(null); // BehaviorSubject para el estado de autenticación
 
   constructor(
     private auth: Auth,
@@ -63,6 +73,7 @@ export class AuthService {
   ) {
     onAuthStateChanged(this.auth, (user) => {
       this.currentUser = user;
+      this.authState.next(user); // Emitir el nuevo estado
       console.log('Estado de auth cambió:', user ? 'Logueado' : 'No logueado');
     });
   }
@@ -227,7 +238,27 @@ export class AuthService {
       return true;
     } catch (error: any) {
       console.error('Error al vincular cuenta:', error);
-      throw new Error('No se pudo vincular la cuenta');
+      let errorMessage = 'No se pudo vincular la cuenta';
+      switch (error.code) {
+        case 'auth/credential-already-in-use':
+          errorMessage = 'Esta credencial ya está asociada a otra cuenta de usuario.';
+          break;
+        case 'auth/email-already-in-use':
+          errorMessage = 'Este email ya está en uso por otra cuenta.';
+          break;
+        case 'auth/invalid-credential':
+          errorMessage = 'Credenciales inválidas.';
+          break;
+        case 'auth/requires-recent-login':
+          errorMessage = 'Por favor, inicia sesión de nuevo para vincular la cuenta.';
+          break;
+        case 'auth/wrong-password':
+          errorMessage = 'Contraseña incorrecta.';
+          break;
+        default:
+          errorMessage = error.message || errorMessage;
+      }
+      throw new Error(errorMessage);
     }
   }
 
@@ -254,7 +285,7 @@ export class AuthService {
 
   // ✅ Escuchar cambios en la sesión
   getAuthState(): Observable<User | null> {
-    return new Observable(observer => onAuthStateChanged(this.auth, observer));
+    return this.authState.asObservable();
   }
 
   // ✅ Obtener los datos de perfil desde Firestore
@@ -262,8 +293,18 @@ export class AuthService {
     try {
       if (!this.currentUser) return null;
       const userDoc = await getDoc(doc(this.firestore, 'users', this.currentUser.uid));
-      return userDoc.exists() ? userDoc.data() as UserData : null;
+      if (userDoc.exists()) {
+        const data = userDoc.data() as UserData;
+        // Convertir Timestamps a Dates
+        data.createdAt = convertFirestoreTimestampToDate(data.createdAt);
+        if (data.ultimaReserva) {
+          data.ultimaReserva = convertFirestoreTimestampToDate(data.ultimaReserva);
+        }
+        return data;
+      }
+      return null;
     } catch (error) {
+      console.error('Error al obtener datos de usuario:', error);
       return null;
     }
   }
@@ -275,7 +316,7 @@ export class AuthService {
     const reserva: Omit<Reserva, 'id'> = {
       ...reservaData,
       usuarioId: this.currentUser.uid,
-      createdAt: new Date()
+      createdAt: Timestamp.fromDate(new Date()) // Guardar como Timestamp
     };
 
     const docRef = await addDoc(collection(this.firestore, 'reservas'), reserva);
@@ -292,12 +333,26 @@ export class AuthService {
     );
 
     const querySnapshot = await getDocs(q);
-    return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }) as Reserva);
+    return querySnapshot.docs.map(doc => {
+      const data = doc.data() as Reserva;
+      // Convertir Timestamps a Dates
+      data.fecha = convertFirestoreTimestampToDate(data.fecha);
+      data.createdAt = convertFirestoreTimestampToDate(data.createdAt);
+      return { id: doc.id, ...data };
+    });
   }
 
   // ✅ Actualizar perfil del usuario
   async updateUserData(userData: Partial<UserData>) {
     if (!this.currentUser) throw new Error('Debes estar logueado para actualizar datos');
-    await setDoc(doc(this.firestore, 'users', this.currentUser.uid), userData, { merge: true });
+    // Asegurarse de que las fechas se conviertan a Timestamp si se actualizan
+    const dataToUpdate: any = { ...userData };
+    if (dataToUpdate.createdAt instanceof Date) {
+      dataToUpdate.createdAt = Timestamp.fromDate(dataToUpdate.createdAt);
+    }
+    if (dataToUpdate.ultimaReserva instanceof Date) {
+      dataToUpdate.ultimaReserva = Timestamp.fromDate(dataToUpdate.ultimaReserva);
+    }
+    await setDoc(doc(this.firestore, 'users', this.currentUser.uid), dataToUpdate, { merge: true });
   }
 }

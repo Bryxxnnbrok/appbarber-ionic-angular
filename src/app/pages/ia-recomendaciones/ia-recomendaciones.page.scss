@@ -1,284 +1,200 @@
-// Contenedor principal con fondo oscuro idéntico a la imagen
-.main-content {
-  --background: #3a4a5c; // Fondo gris azulado oscuro como en la imagen
-  --color: #ffffff;
-  height: 100vh;
-  position: relative;
+/*
+ * Paleta de Colores: Azul Vintage Minimalista (Versión 2)
+ */
+:root {
+  --ion-background-color: #d6e2f0; // Fondo azul vintage, más presente
+  --ion-text-color: #2c3e50; // Azul naval oscuro para texto
+  --ion-color-primary: #2980b9; // Un azul más vivo para acentos
+  --ion-color-primary-contrast: #ffffff;
+  --ion-toolbar-background: #ffffff;
+  --ion-border-color: #c8d6e5; // Borde sutil, en tono con el fondo
+
+  --user-message-background: #2980b9;
+  --user-message-color: #ffffff;
+  --bot-message-background: #ffffff;
+  --bot-message-color: #2c3e50;
+  --input-background: #ffffff;
+  --placeholder-color: #85929e;
 }
 
-// Header con logo y menú hamburguesa
-.header-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 20px 0 20px;
-  position: relative;
-  z-index: 10;
-}
-
-// Contenedor del logo circular
-.logo-container {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  background: #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-  
-  .logo-image {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
+/*
+ * Estilos Generales
+ */
+ion-header {
+  ion-toolbar {
+    --background: var(--ion-toolbar-background);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  }
+  ion-title {
+    font-weight: 600;
+    color: var(--ion-text-color);
   }
 }
 
-// Botón del menú hamburguesa
-.menu-button {
-  --color: #ffffff;
-  --background: transparent;
-  margin: 0;
-  
-  .menu-icon {
-    font-size: 24px;
-    color: #ffffff;
-  }
+ion-content {
+  --background: #1b1b29;
 }
 
-// Contenedor principal del chat
 .chat-container {
+  height: 100%;
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 140px); // Altura total menos header y input
-  padding: 0 20px;
-  position: relative;
 }
 
-// Sección de saludo del bot (parte superior)
-.bot-greeting {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 60px;
-  margin-bottom: 40px;
-}
-
-
-// Avatar del bot con imagen personalizada
-.bot-avatar {
-  width: 80px;
-  height: 80px;
-    // Elimina el fondo y sombra del contenedor
-  background: transparent !important;
-  box-shadow: none !important;
-
-  border-radius: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  margin-bottom: 20px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  overflow: hidden; // Para que la imagen no sobresalga del borde
-  
-  .bot-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; // Asegura que la imagen cubra todo el espacio
-  }
-  
-  // Elimina estos estilos si ya no los necesitas
-  .robot-icon, .bot-face {
-    display: none;
-  }
-}
-  
-
-
-// Animación de parpadeo para los ojos del robot
-@keyframes blink {
-  0%, 90%, 100% { opacity: 1; }
-  95% { opacity: 0; }
-}
-
-// Texto de saludo
-.greeting-text {
+/*
+ * Estado Inicial (Logo y Saludo)
+ */
+.initial-state-container {
   text-align: center;
-  
-  h2 {
-    color: #e8e9ea; // Color beige claro como en la imagen
-    font-size: 28px;
-    font-weight: 400;
-    margin: 0 0 8px 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+
+  .logo-wrapper {
+    margin-bottom: 24px;
+    .logo-image {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: 3px solid var(--ion-toolbar-background);
+      box-shadow: 0 4px 15px rgba(44, 62, 80, 0.15);
+    }
   }
-  
-  .subtitle {
-    color: #b8c2cc; // Color gris claro para el subtítulo
-    font-size: 16px;
-    margin: 0;
-    font-weight: 300;
+
+  .greeting-title {
+    font-size: 1.7rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--ion-text-color);
+  }
+
+  .greeting-subtitle {
+    font-size: 1rem;
+    color: var(--placeholder-color);
+    max-width: 320px;
+    line-height: 1.6;
   }
 }
 
-// Área donde aparecen los mensajes del chat
+/*
+ * Área de Mensajes
+ */
 .messages-area {
   flex: 1;
   overflow-y: auto;
-  padding: 10px 0;
-  margin-bottom: 20px;
-  
-  // Estilos para los mensajes individuales
-  .message {
-    margin-bottom: 15px;
-    display: flex;
-    
-    &.user {
-      justify-content: flex-end;
-      
-      .message-content {
-        background: #007bff;
-        color: white;
-        border-radius: 18px 18px 4px 18px;
-        max-width: 70%;
-      }
-    }
-    
-    &.bot {
-      justify-content: flex-start;
-      
-      .message-content {
-        background: #f1f3f4;
-        color: #333;
-        border-radius: 18px 18px 18px 4px;
-        max-width: 70%;
-      }
-    }
-    
-    .message-content {
-      padding: 12px 16px;
-      
-      p {
-        margin: 0;
-        font-size: 16px;
-        line-height: 1.4;
-      }
-      
-      .message-image {
-        max-width: 100%;
-        height: auto;
-        border-radius: 8px;
-        margin-top: 8px;
-      }
-    }
-  }
+  padding: 8px;
 }
 
-// Contenedor del input fijo en la parte inferior
-.input-container {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: #3a4a5c; // Mismo fondo que el contenedor principal
-  padding: 15px 20px 20px 20px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-// Wrapper del input con todos los elementos
-.input-wrapper {
+.message-wrapper {
   display: flex;
-  align-items: center;
-  background: #d4b5a0; // Color beige/marrón claro como en la imagen
-  border-radius: 25px;
-  padding: 4px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
+  margin-bottom: 16px;
+  animation: fadeIn 0.3s ease-in-out;
 
-// Campo de texto para escribir mensajes
-.message-input {
-  flex: 1;
-  --background: transparent;
-  --color: #5a4a3a; // Color de texto oscuro para contraste
-  --placeholder-color: #8a7a6a; // Color del placeholder
-  --border-width: 0;
-  --inner-padding-start: 16px;
-  --inner-padding-end: 8px;
-  font-size: 16px;
-  
-  ion-input {
-    --background: transparen !important;
-    --color: #5a4a3a !important;
+  &.user {
+    justify-content: flex-end;
+  }
+
+  &.bot {
+    justify-content: flex-start;
   }
 }
 
-// Botón de cámara/adjuntar
-.attach-button {
-  --background: transparent;
-  --color: #6c757d;
-  margin: 0 4px;
-  min-height: 40px;
-  min-width: 40px;
-  
-  .camera-icon {
-    font-size: 20px;
-    color: #6c757d;
+.message-content {
+  display: flex;
+  max-width: 85%;
+
+  .text-wrapper {
+    padding: 12px 18px;
+    border-radius: 20px;
+    line-height: 1.5;
+    p {
+      margin: 0;
+      text-align: justify; /* CORRECCIÓN: Texto justificado */
+    }
+  }
+
+  &.bot {
+    align-items: flex-start; /* CORRECCIÓN: Alinea el avatar y el texto arriba */
+    .avatar-wrapper {
+      margin-right: 10px;
+      flex-shrink: 0; /* CORRECCIÓN: Evita que el avatar se encoja */
+      .bot-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+      }
+    }
+    .text-wrapper {
+      background: var(--bot-message-background);
+      color: var(--bot-message-color);
+      box-shadow: 0 2px 5px rgba(44, 62, 80, 0.1);
+      border-top-left-radius: 5px;
+    }
+  }
+
+  &.user {
+    .text-wrapper {
+      background: var(--user-message-background);
+      color: var(--user-message-color);
+      box-shadow: 0 2px 5px rgba(52, 152, 219, 0.3);
+      border-top-right-radius: 5px;
+    }
+    .message-image {
+      max-width: 100%;
+      border-radius: 15px;
+      margin-top: 8px;
+    }
   }
 }
 
-// Botón de enviar
-.send-button {
-  background: #4a5568; // Color gris oscuro como en la imagen
-  color: white;
-  border-radius: 20px;
-  font-size: 14px;
-  font-weight: 500;
-  padding: 8px 16px;
-  margin: 0;
-  text-transform: none;
-  min-height: 36px;
-  
-  &:disabled {
-    opacity: 0.5;
-  }
-  
-  &:hover:not(:disabled) {
-    background: #2d3748;
-  }
-}
-
-// Scrollbar personalizado para el área de mensajes
-.messages-area::-webkit-scrollbar {
-  width: 4px;
-}
-
-.messages-area::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.messages-area::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 2px;
-}
-
-// Responsive para pantallas más pequeñas
-@media (max-width: 480px) {
-  .bot-greeting {
-    margin-top: 40px;
-    margin-bottom: 30px;
-  }
-  
-  .greeting-text h2 {
-    font-size: 24px;
-  }
-  
-  .greeting-text .subtitle {
-    font-size: 14px;
-  }
-  
+/*
+ * Footer y Área de Entrada
+ */
+ion-footer {
   .input-container {
-    padding: 12px 15px 15px 15px;
+    display: flex;
+    align-items: center;
+    padding: 8px 10px;
+    background-color: var(--ion-toolbar-background);
+    border-top: 1px solid var(--ion-border-color);
+
+    .message-input {
+      flex: 1;
+      background: var(--ion-background-color);
+      border: 1px solid var(--ion-border-color);
+      border-radius: 25px;
+      padding: 12px 18px;
+      margin: 0 8px;
+      font-size: 1rem;
+      --padding-start: 18px;
+      --padding-end: 18px;
+      --placeholder-color: var(--placeholder-color);
+      max-height: 120px;
+    }
+
+    ion-button {
+      --padding-start: 0;
+      --padding-end: 0;
+      width: 48px;
+      height: 48px;
+      font-size: 1.5rem;
+      color: var(--ion-color-primary);
+
+      &[disabled] {
+        color: var(--placeholder-color);
+        opacity: 0.6;
+      }
+    }
   }
+}
+
+/*
+ * Animaciones
+ */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }

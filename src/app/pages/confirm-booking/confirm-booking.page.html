@@ -1,0 +1,52 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/reservar/seleccionar-servicio"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Confirmar Reserva</ion-title>
+    <ion-buttons slot="end">
+      <ion-menu-button auto-hide="false" menu="main-menu" side="end"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="hero-image">
+    <!-- Imagen hero, igual que en la primera pantalla -->
+  </div>
+
+  <div class="content-container">
+    <div class="confirmation-card" *ngIf="selectedService && selectedDate">
+      <!-- Nombre del servicio -->
+      <h3 class="service-name">{{ selectedService.nombre }}</h3>
+
+      <!-- Fecha formateada -->
+      <p class="booking-date">{{ formattedDate }}</p>
+
+      <!-- Rango horario -->
+      <p class="booking-time">{{ formattedTimeRange }}</p>
+
+      <!-- Separador -->
+      <div class="separator"></div>
+
+      <!-- Precio -->
+      <div class="price">S/.{{ selectedService.precio.toFixed(2) }}</div>
+
+      <!-- Botón para confirmar -->
+      <ion-button
+        class="confirm-button"
+        [disabled]="isConfirming"
+        (click)="confirmBooking()"
+        (keyup.enter)="confirmBooking()">
+        <ion-spinner name="crescent" *ngIf="isConfirming" class="button-spinner"></ion-spinner>
+        {{ isConfirming ? 'Confirmando...' : 'Reservar Ahora' }}
+      </ion-button>
+    </div>
+
+    <!-- Estado vacío si no hay datos -->
+    <div class="empty-state" *ngIf="!selectedService || !selectedDate">
+      <p>No hay información de reserva disponible.</p>
+      <ion-button routerLink="/reservar/seleccionar-fecha">Volver al inicio</ion-button>
+    </div>
+  </div>
+</ion-content>

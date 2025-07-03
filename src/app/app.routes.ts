@@ -23,6 +23,19 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/home/home.page').then(m => m.HomePage)
   },
 
+  {
+    path: 'reservar/seleccionar-servicio',
+    loadComponent: () => import('./pages/select-service/select-service.page').then(m => m.SelectServicePage)
+  },
+  {
+    path: 'reservar/seleccionar-fecha',
+    loadComponent: () => import('./pages/select-date/select-date.page').then(m => m.SelectDatePage)
+  },
+  {
+    path: 'reservar/confirmar',
+    loadComponent: () => import('./pages/confirm-booking/confirm-booking.page').then(m => m.ConfirmBookingPage)
+  },
+
         {
     path: 'catalogo-servicios',
     loadComponent: () => import('./pages/catalogo-servicios/catalogo-servicios.page').then(m => m.CatalogoServiciosPage)
@@ -47,9 +60,17 @@ export const routes: Routes = [
     path: 'arreglo-de-barba',
     loadComponent: () => import('./pages/arreglo-de-barba/arreglo-de-barba.page').then( m => m.ArregloDeBarbaPage)
   },
+
+  {
+    path: 'arreglo-cejas',
+    loadComponent: () => import('./pages/arreglo-cejas/arreglo-cejas.page').then( m => m.ArregloCejasPage)
+  },
+
   {
     path: '**',
     redirectTo: 'bienvenida' // Cambiado a redirect en lugar de recargar el mismo componente
   }
+
+
  
 ];

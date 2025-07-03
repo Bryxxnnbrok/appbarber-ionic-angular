@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule, CurrencyPipe } from '@angular/common'; // Agregamos CurrencyPipe
 import { FormsModule } from '@angular/forms';
 import {
@@ -6,26 +6,24 @@ import {
   IonHeader,
   IonTitle,
   IonToolbar,
-  IonButtons,    // <-- Añadido
-  IonMenuButton, // <-- Añadido
-  IonCard,       // <-- Añadido
-  IonItem,       // <-- Añadido
-  IonThumbnail,  // <-- Añadido
-  IonLabel,      // <-- Añadido
-  IonIcon,       // <-- Añadido
-  IonMenu,       // <-- Añadido
-  IonList        // <-- Añadido
+  IonButtons,
+  IonMenuButton,
+  IonCard,
+  IonItem,
+  IonThumbnail,
+  IonLabel,
+  IonIcon,
+  IonBackButton
 } from '@ionic/angular/standalone';
-import { Router } from '@angular/router';
-import { MenuController, AlertController} from '@ionic/angular/standalone';
+import { Router } from '@angular/router'; // Importar Router
 import { addIcons } from 'ionicons';
-import { 
-  menu, 
-  chevronForward, 
-  chatbubbleEllipses, 
-  person, 
-  time, 
-  logOut 
+import {
+  menu,
+  chevronForward,
+  chatbubbleEllipses,
+  person,
+  time,
+  logOut
 } from 'ionicons/icons';
 
 @Component({
@@ -41,19 +39,19 @@ import {
     IonToolbar,
     CommonModule,
     FormsModule,
-    IonButtons,    // <-- Añadido
-    IonMenuButton, // <-- Añadido
-    IonCard,       // <-- Añadido
-    IonItem,       // <-- Añadido
-    IonThumbnail,  // <-- Añadido
-    IonLabel,      // <-- Añadido
-    IonIcon,       // <-- Añadido
-    IonMenu,       // <-- Añadido
-    IonList,       // <-- Añadido
-    CurrencyPipe   // <-- Añadido para formatear el precio
-  ]
+    IonButtons,
+    IonMenuButton,
+    IonCard,
+    IonItem,
+    IonThumbnail,
+    IonLabel,
+    IonIcon,
+    CurrencyPipe,
+    IonBackButton
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class CortesDeCabelloPage implements OnInit {
+export class CortesDeCabelloPage {
 
   // Creamos el array con los datos de los cortes. El HTML usará esta variable.
   public listaDeCortes = [
@@ -76,6 +74,12 @@ export class CortesDeCabelloPage implements OnInit {
       imagen: 'assets/images/Corte_Pompadour.jpg'
     },
     {
+      categoria: 'Corte Infantil',
+      nombre: 'Ideal para niños de 12 años',
+      precio: 18.00,
+      imagen: 'assets/images/corte_niño.jpeg'
+    },
+        {
       categoria: 'Servicios Adicionales',
       nombre: 'Arreglo de Barba',
       precio: 10.00,
@@ -84,10 +88,8 @@ export class CortesDeCabelloPage implements OnInit {
   ];
 
   constructor(
-    private router: Router,
-    private menuCtrl: MenuController,
-    private alertCtrl: AlertController
-  ) { 
+    private router: Router
+  ) {
 
     // Registrar los iconos que vamos a usar
     addIcons({
@@ -99,50 +101,4 @@ export class CortesDeCabelloPage implements OnInit {
       logOut
     });
   }
-
-  ngOnInit() {
-  }
-
-  // Métodos para el menú lateral
-  async openMenu() {
-    await this.menuCtrl.open('main-menu');
-  }
-
-  goToProfile() {
-    this.menuCtrl.close();
-    this.router.navigate(['/perfil']);
-  }
-
-  goToHistory() {
-    this.menuCtrl.close();
-    this.router.navigate(['/perfil'], { queryParams: { section: 'historial' } });
-  }
-
-  async logout() {
-    const alert = await this.alertCtrl.create({
-      header: 'Cerrar Sesión',
-      message: '¿Estás seguro que deseas cerrar sesión?',
-      buttons: [
-        {
-          text: 'Cancelar',
-          role: 'cancel'
-        },
-        {
-          text: 'Cerrar Sesión',
-          handler: () => {
-            this.performLogout();
-          }
-        }
-      ]
-    });
-
-    await alert.present();
-  }
-
-  private performLogout() {
-    // Aquí puedes limpiar datos de sesión si usas autenticación
-    this.menuCtrl.close();
-    this.router.navigate(['/bienvenida'], { replaceUrl: true });
-  }
-
 }
