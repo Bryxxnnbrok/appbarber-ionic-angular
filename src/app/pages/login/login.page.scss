@@ -1,23 +1,11 @@
-// Variables exactas de la imagen
-:root {
-  --bg-primary: #4a5568;
-  --bg-secondary: #2d3748;
-  --accent-beige: #d4b896;
-  --text-primary: #ffffff;
-  --text-secondary: #a0aec0;
-  --text-muted: #718096;
-  --border-color: #e2e8f0;
-  --input-border: #4a5568;
-}
-
 * {
   box-sizing: border-box;
   font-family: 'Hahmlet', serif;
 }
 
 .login-content {
-  --background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
-  --color: #ffffff;
+  --background: linear-gradient(135deg, var(--app-color-gradiente-inicio) 0%, var(--app-color-gradiente-fin) 100%);
+  --color: var(--app-color-blanco);
   --padding-top: 0;
   --padding-bottom: 0;
   --padding-start: 0;
@@ -53,7 +41,7 @@
 
 // Título exacto
 .login-title {
-  color: #D5C2BD;
+  color: var(--app-color-texto-secundario);
   font-family: 'Hahmlet', serif;
   font-weight: 400;
   font-size: 28px;
@@ -76,16 +64,16 @@
   
   ion-input.custom-input {
     --background: transparent;
-    --color: #D5C2BD;
-    --placeholder-color: #D5C2BD
+    --color: var(--app-color-texto-secundario);
+    --placeholder-color: var(--app-color-texto-secundario);
     --placeholder-opacity: 1;
     --border-radius: 0;
     --border-color: transparent;
     --border-style: none;
     --border-width: 0;
-    --highlight-color-focused: #D5C2BD
-    --highlight-color-valid: #D5C2BD
-    --highlight-color-invalid: #D5C2BD;
+    --highlight-color-focused: var(--app-color-texto-secundario);
+    --highlight-color-valid: var(--app-color-texto-secundario);
+    --highlight-color-invalid: var(--app-color-texto-secundario);
     --padding-start: 0;
     --padding-end: 0;
     --padding-top: 12px;
@@ -93,25 +81,25 @@
     
     font-size: 16px;
     font-weight: 300;
-    border-bottom: 1px solid #D5C2BD;
+    border-bottom: 1px solid var(--app-color-texto-secundario);
     border-radius: 0;
     
     &.ion-focused {
-      border-bottom-color: #D5C2BD;
+      border-bottom-color: var(--app-color-texto-secundario);
     }
     
     &.ion-valid {
-      border-bottom-color: #D5C2BD;
+      border-bottom-color: var(--app-color-texto-secundario);
     }
     
     &.ion-invalid {
-      border-bottom-color: #D5C2BD;
+      border-bottom-color: var(--app-color-texto-secundario);
     }
   }
   
   &.password-group {
     .password-toggle-btn {
-      --color: #D5C2BD;
+      --color: var(--app-color-texto-secundario);
       --background: transparent;
       --background-hover: transparent;
       --background-activated: transparent;
@@ -127,10 +115,10 @@
       
       .password-toggle {
         font-size: 20px;
-        color: #D5C2BD;
+        color: var(--app-color-texto-secundario);
         
         &:hover {
-          color: #D5C2BD
+          color: var(--app-color-texto-secundario);
         }
       }
     }
@@ -143,7 +131,7 @@
   
   .checkbox-item {
     --background: transparent;
-    --color: #D5C2BD;
+    --color: var(--app-color-texto-secundario);
     --border-color: transparent;
     --inner-border-width: 0;
     --padding-start: 0;
@@ -152,10 +140,10 @@
     
     ion-checkbox.custom-checkbox {
       --background: transparent;
-      --background-checked: #D5C2BD;
-      --border-color: #D5C2BD;
-      --border-color-checked: #D5C2BD;
-      --checkmark-color: #4a5568;
+      --background-checked: var(--app-color-texto-secundario);
+      --border-color: var(--app-color-texto-secundario);
+      --border-color-checked: var(--app-color-texto-secundario);
+      --checkmark-color: var(--app-color-gradiente-inicio);
       --border-radius: 50%;
       --border-width: 2px;
       --size: 18px;
@@ -163,7 +151,7 @@
     }
     
     .checkbox-label {
-      color: #D5C2BD;
+      color: var(--app-color-texto-secundario);
       font-size: 14px;
       font-weight: 300;
       margin: 0;
@@ -173,10 +161,10 @@
 
 // Botón principal exacto adaptado para ion-button
 ion-button.login-button {
-  --background: #D5C2BD;
-  --background-hover: #D5C2BD;
-  --background-activated: #D5C2BD;
-  --color: #4a5568;
+  --background: var(--app-color-acento-primario);
+  --background-hover: var(--app-color-acento-primario);
+  --background-activated: var(--app-color-acento-primario);
+  --color: var(--app-color-gradiente-inicio);
   --border-radius: 25px;
   --box-shadow: none;
   --ripple-color: rgba(74, 85, 104, 0.2);
@@ -197,7 +185,7 @@ ion-button.login-button {
   }
   
   ion-spinner {
-    --color: #4a5568;
+    --color: var(--app-color-gradiente-inicio);
     width: 20px;
     height: 20px;
   }
@@ -212,11 +200,11 @@ ion-button.login-button {
   .separator-line {
     flex: 1;
     height: 1px;
-    background: #D5C2BD;
+    background: var(--app-color-texto-secundario);
   }
   
   .separator-text {
-    color: #D5C2BD;
+    color: var(--app-color-texto-secundario);
     font-size: 16px;
     font-weight: 300;
     margin: 0 20px;
@@ -229,9 +217,9 @@ ion-button.google-button {
   --background: transparent;
   --background-hover: rgba(255, 255, 255, 0.1);
   --background-activated: rgba(255, 255, 255, 0.1);
-  --color: #D5C2BD;
-  --border-color: #D5C2BD;
-  --border-color-hover: #ffffff;
+  --color: var(--app-color-texto-secundario);
+  --border-color: var(--app-color-texto-secundario);
+  --border-color-hover: var(--app-color-blanco);
   --border-radius: 25px;
   --border-width: 1px;
   --box-shadow: none;
@@ -253,7 +241,7 @@ ion-button.google-button {
   }
   
   ion-spinner {
-    --color: #D5C2BD;
+    --color: var(--app-color-texto-secundario);
     width: 18px;
     height: 18px;
     margin-right: 8px;
@@ -281,7 +269,7 @@ ion-button.google-button {
     --background: transparent;
     --background-hover: transparent;
     --background-activated: transparent;
-    --color:#D5C2BD;
+    --color: var(--app-color-texto-secundario);
     --ripple-color: rgba(212, 184, 150, 0.2);
     --box-shadow: none;
     --padding-start: 4px;

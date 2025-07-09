@@ -1,22 +1,14 @@
-// Variables de colores
-:root {
-  --background-dark: #4a5568;
-  --card-background: rgba(255, 255, 255, 0.1);
-  --text-primary: #ffffff;
-  --text-secondary: rgba(255, 255, 255, 0.7);
-  --accent-color: #d69e2e;
-  --button-background: rgba(255, 255, 255, 0.9);
-  --button-text: #4a5568;
+@import url('https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+.home-header{
+  font-family: 'Tinos', serif;
 }
-
 .home-content {
-  --background: var(--background-dark);
-  background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
-}
+ background: #384455;
+font-family: 'Tinos', serif;}
 
 ion-toolbar {
-  --min-height: 48px; /* Altura mínima del toolbar */
-  padding: 0 16px; /* Ajustar padding para reducir el espacio */
+  --min-height: 70px; /* Altura mínima del toolbar */
+  padding: 0px; /* Ajustar padding para reducir el espacio */
 }
 
 ion-buttons[slot="start"] {
@@ -27,24 +19,24 @@ ion-buttons[slot="start"] {
 }
 
 .logo-img {
-  width: 24px; /* Reducir el tamaño del logo */
-  height: 24px; /* Reducir el tamaño del logo */
+  width: 70px; /* Reducir el tamaño del logo */
+  height: 70px; /* Reducir el tamaño del logo */
   border-radius: 50%;
-  margin-right: 8px; /* Reducir el margen */
+  margin-right: 3px; /* Reducir el margen */
 }
 
 .welcome-text {
   display: flex;
   flex-direction: column;
   justify-content: center; /* Centrar verticalmente el texto */
-  height: 100%; /* Asegurar que ocupe la altura del contenedor */
-  
+  height: 100%; /* Asegurar que ocupe la altura del contenedor */  
+
   .welcome-title,
   .username {
-    font-size: 12px; /* Reducir tamaño de fuente */
+    font-size: 14px;
     font-weight: 500;
-    color: #F7FAFC; /* Blanco roto para el texto */
-    line-height: 1.1; /* Reducir altura de línea */
+    color: var(--app-color-texto-secundario);
+    line-height: 1.1;
   }
 }
 
@@ -54,9 +46,9 @@ ion-buttons[slot="start"] {
   
   .custom-searchbar {
     --background: rgba(255, 255, 255, 0.9);
-    --color: #4a5568;
-    --placeholder-color: #718096;
-    --icon-color: #718096;
+    --color: var(--app-color-gradiente-inicio);
+    --placeholder-color: var(--app-color-texto-muted);
+    --icon-color: var(--app-color-texto-muted);
     --border-radius: 25px;
     --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     
@@ -72,7 +64,7 @@ ion-buttons[slot="start"] {
   padding: 10px 16px 1px;
   
   .services-title {
-    color: #e5dddb;
+    color: var(--app-color-texto-secundario);
     font-size: 24px;
     font-weight: 600;
     margin-bottom: 20px;
@@ -100,7 +92,7 @@ ion-buttons[slot="start"] {
   .service-card {
     width: 200px;
     height: 300px;
-    background: #e8e7e7;
+    background: var(--ion-color-light-shade);
     border-radius: 15px;
     overflow: hidden;
     backdrop-filter: blur(10px);
@@ -132,7 +124,7 @@ ion-buttons[slot="start"] {
       flex-grow: 1;
       
       h3 {
-        color: #354467;
+        color: var(--app-color-fondo-principal);
         font-size: 16px;
         font-weight: 600;
         margin: 0 0 8px 0;
@@ -140,75 +132,62 @@ ion-buttons[slot="start"] {
       }
       
       p {
-        color:#3c4863c6;
+        color:#1c1b1b;
         font-size: 14px;
         font-weight: 200;
         margin: 0;
         line-height: 1.4;
+        text-align: justify;
       }
     }
   }
   
-  .carousel-nav-btn {
-    position: absolute;
-    top: 40%;
-    transform: translateY(-50%);
-    z-index: 10;
-    --background: rgba(255, 255, 255, 0);
-    --color: var(--text-primary);
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    backdrop-filter: blur(10px);
-    
-    &.right-nav {
-      right: -5px;
-    }
-    
-    ion-icon {
-      font-size: 20px;
-      color: rgba(65, 69, 106, 0.9);
-    }
-  }
+
 }
 
 // Botones de acción
 .action-buttons {
-  padding: 60px 16px 40px;
+  padding: 16px;
   display: flex;
   align-items: center;
   gap: 20px;
   
   .reserve-button {
     flex: 1;
-    --background: #D5C2BD;
-    --color: #2d384c;
-    --border-radius: 25px;
+    
+    --background: #D5C2BD; /* Color de fondo personalizado */
+    --color: var(--app-color-fondo-principal);
+    --border-radius: 15px;
     height: 50px;
     font-size: 16px;
     font-weight: 600;
     text-transform: none;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    font-family: 'Tinos', serif; /* Fuente personalizada para el botón de reserva */
   }
   
+    /* Estilos específicos para el botón flotante de IA */
   .ai-button {
-    --background: transparent;
-    box-shadow: none !important;
-    --padding-start: 0;
-    --padding-end: 0;
-    width: 70px;
-    height: 70px;
-    margin: 0;
-    position: relative;
-    animation: float 3s ease-in-out infinite;
+    --background: transpaent; /* Fondo transparente para que solo se vea la imagen */
+    --padding-start: 0; /* Sin espaciado al inicio */
+    --padding-end: 0; /* Sin espaciado al final */
+    width: 70px; /* Ancho del botón */
+    height: 70px; /* Alto del botón */
+    margin: 0; /* Sin margen exterior */
+    position: relative; /* Posición relativa para elementos internos como el indicador */
+    animation: float 3s ease-in-out infinite; /* Animación de flotación */
+
+    /* 
+     * Propiedad para el color del efecto "ripple" (onda al hacer clic).
+     * Esto anula el color global que afecta a otros botones y se aplica solo a este elemento.
+     * Se está usando el color '--ion-color-success' (verde) definido en src/theme/variables.scss.
+     */
+    --ripple-color: #ffffff00; /* Sin efecto ripple visible */
     
     .ai-avatar {
       width: 100%;
       height: 100%;
-      object-fit: contain;
-      border-radius: 50%;
-      background: transparent !important;
-      box-shadow: none !important;
+
       transition: transform 0.3s ease;
     }
     
@@ -224,9 +203,8 @@ ion-buttons[slot="start"] {
       right: 5px;
       width: 12px;
       height: 12px;
-      background: #48bb78;
+      background: var(--ion-color-success-shade); /* Color verde definido en variables.scss */
       border-radius: 50%;
-      border: 2px solid var(--background-dark);
       z-index: 10;
     }
   }
@@ -236,36 +214,6 @@ ion-buttons[slot="start"] {
     50% { transform: translateY(-10px); }
   }
 }
-
-// Menú lateral
-ion-menu {
-  ion-content {
-    --background: var(--background-dark);
-  }
-  
-  ion-list {
-    background: transparent;
-  }
-  
-  ion-item {
-    --background: transparent;
-    --color: var(--text-primary);
-    
-    ion-icon {
-      color: var(--text-primary);
-    }
-    
-    ion-label {
-      color: var(--text-primary);
-    }
-    
-    &:hover {
-      --background: rgba(255, 255, 255, 0.1);
-    }
-  }
-}
-
-
 
 // Responsive
 @media (max-width: 480px) {

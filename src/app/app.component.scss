@@ -4,29 +4,30 @@ ion-menu {
 
 ion-menu ion-header {
   ion-toolbar {
-    --background: #1A202C; /* Fondo oscuro para el encabezado del menú */
-    --color: #F7FAFC; /* Color de texto claro */
+    --background: #111213;
+    --color: #ffffff;
+    
     --border-width: 0; /* Sin borde */
     box-shadow: none; /* Sin sombra */
   }
-}
 
-ion-menu ion-content {
-  --background: #2D3748; /* Fondo oscuro ligeramente más claro para el contenido del menú */
+}
+ion-content{
+  --background: #384455;
 }
 
 ion-menu ion-list {
-  background: transparent; /* Asegurar que el fondo de la lista sea transparente */
+  background: #384455;
 }
 
 ion-menu ion-item {
-  --background: transparent; /* Fondo transparente para los ítems */
-  --color: #CBD5E0; /* Color de texto gris claro */
-  --ripple-color: rgba(160, 174, 192, 0.3); /* Efecto de onda sutil */
-  transition: background-color 0.2s ease-in-out; /* Transición suave para hover/active */
+  --background: #384455;
+  --color: var(--app-color-texto-secundario);
+  --ripple-color: rgba(192, 160, 160, 0.3); /* TODO: Considerar crear una variable para este color RGBA */
+  transition: background-color 0.2s ease-in-out;
 
   ion-icon {
-    color: #A0AEC0; /* Color gris azulado claro para los iconos */
+    color: var(--app-color-texto-secundario);
     transition: transform 0.2s ease-in-out; /* Animación sutil del icono */
   }
 

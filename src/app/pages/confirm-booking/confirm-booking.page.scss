@@ -2,7 +2,7 @@
 .hero-image {
   width: 100%;
   height: 220px;
-  background: url('/assets/images/barber.jpg') no-repeat center center;
+  background: url('/assets/images/Barber_unic.jpg') no-repeat center center;
   background-size: cover;
   position: relative;
 
@@ -17,7 +17,7 @@
 }
 
 .content-container {
-  background-color: #384455;
+  background-color: var(--app-color-fondo-principal);
   padding: 20px;
   min-height: calc(100% - 220px); // Restar altura del hero
   display: flex;
@@ -27,7 +27,7 @@
 }
 
 .confirmation-card {
-  background-color: #FFFFFF;
+  background-color: var(--app-color-blanco);
   border-radius: 8px;
   padding: 24px;
   width: 85%;
@@ -37,7 +37,7 @@
 
   .service-name {
     font-family: 'Playfair Display', serif;
-    color: #384455;
+    color: var(--app-color-fondo-principal);
     font-size: 20px;
     margin: 0 0 16px 0;
   }
@@ -45,28 +45,28 @@
   .booking-date,
   .booking-time {
     font-family: 'Playfair Display', serif;
-    color: #384455;
+    color: var(--app-color-fondo-principal);
     margin: 8px 0;
     font-size: 16px;
   }
 
   .separator {
     height: 1px;
-    background-color: #ECE9E9;
+    background-color: var(--ion-color-light-shade);
     margin: 16px 0;
   }
 
   .price {
     font-family: 'Playfair Display', serif;
-    color: #384455;
+    color: var(--app-color-fondo-principal);
     font-size: 22px;
     font-weight: bold;
     margin: 16px 0 24px;
   }
 
   .confirm-button {
-    --background: #D5C2BD;
-    --color: #384455;
+    --background: var(--app-color-acento-primario);
+    --color: var(--app-color-fondo-principal);
     --border-radius: 8px;
     --box-shadow: rgba(0, 0, 0, 0.08) 0 2px 4px;
     font-family: 'Playfair Display', serif;
@@ -75,13 +75,13 @@
     text-transform: none;
 
     &[disabled] {
-      --background: #E8E8E8;
-      --color: #999;
+      --background: var(--app-color-fondo-deshabilitado);
+      --color: var(--app-color-texto-deshabilitado);
       opacity: 0.7;
     }
 
     .button-spinner {
-      --color: #384455;
+      --color: var(--app-color-fondo-principal);
       margin-right: 8px;
       width: 16px;
       height: 16px;
@@ -97,15 +97,15 @@
   height: 200px;
 
   p {
-    color: #F5F5F5;
+    color: var(--ion-color-light);
     font-family: 'Playfair Display', serif;
     text-align: center;
     margin-bottom: 20px;
   }
 
   ion-button {
-    --background: #D5C2BD;
-    --color: #384455;
+    --background: var(--app-color-acento-primario);
+    --color: var(--app-color-fondo-principal);
     --border-radius: 8px;
     font-family: 'Playfair Display', serif;
   }
@@ -113,12 +113,12 @@
 
 // Estilos para el loading personalizado
 ::ng-deep .custom-loading {
-  --background: rgba(56, 68, 85, 0.9);
-  --color: #F5F5F5;
+  --background: rgba(56, 68, 85, 0.9); // Nota: Se mantiene RGBA para la transparencia.
+  --color: var(--ion-color-light);
 
   .loading-wrapper {
     --background: rgba(56, 68, 85, 0.95);
-    --color: #F5F5F5;
+    --color: var(--ion-color-light);
     border-radius: 12px;
     padding: 20px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
@@ -130,63 +130,7 @@
   }
 
   .loading-spinner {
-    --color: #D5C2BD;
+    --color: var(--app-color-acento-primario);
   }
 }
 
-// Estilos para el toast personalizado
-::ng-deep .custom-toast {
-  --background: #FFFFFF;
-  --color: #384455;
-  --border: 1px solid #D5C2BD;
-  --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-
-  .toast-wrapper {
-    border-radius: 12px;
-    font-family: 'Playfair Display', serif;
-    padding: 16px;
-  }
-
-  .toast-message {
-    font-size: 15px;
-    line-height: 1.4;
-  }
-
-  .toast-button {
-    --color: #384455;
-    --background: transparent;
-    font-family: 'Playfair Display', serif;
-    font-weight: 500;
-    text-transform: none;
-
-    &.toast-button-cancel {
-      --color: #888;
-    }
-  }
-
-  &.toast-color-success {
-    --background: #F0F8F0;
-    --border: 1px solid #4CAF50;
-
-    .toast-message {
-      color: #2E7D32;
-    }
-
-    .toast-button {
-      --color: #4CAF50;
-    }
-  }
-
-  &.toast-color-danger {
-    --background: #FFF5F5;
-    --border: 1px solid #F44336;
-
-    .toast-message {
-      color: #C62828;
-    }
-
-    .toast-button {
-      --color: #F44336;
-    }
-  }
-}

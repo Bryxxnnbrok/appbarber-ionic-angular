@@ -1,3 +1,4 @@
+<!-- Header con navegación -->
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
@@ -11,68 +12,112 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-segment [(ngModel)]="selectedSegment" (ionChange)="segmentChanged($event)" mode="md">
-    <ion-segment-button value="perfil">
-      <ion-label>Datos Personales</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="historial">
-      <ion-label>Historial de Reservas</ion-label>
-    </ion-segment-button>
-  </ion-segment>
+  <!-- Segmento de navegación -->
+  <div class="segmento-scroll" #segmentWrapperRef>
+    <ion-segment
+      #segmentElementRef
+      [(ngModel)]="selectedSegment"
+      (ionChange)="segmentChanged($event)"
+      mode="md">
+      <ion-segment-button value="perfil">
+        <ion-label>Datos Personales</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="historial">
+        <ion-label>Historial de reservas</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </div>
 
+  <!-- Contenido principal -->
   <div [ngSwitch]="selectedSegment">
+    
+    <!-- Sección Perfil -->
     <div *ngSwitchCase="'perfil'">
-      <ion-card *ngIf="userData">
-        <ion-card-header>
-          <ion-card-title>Información del Usuario</ion-card-title>
-        </ion-card-header>
-        <ion-card-content>
-          <ion-item>
-            <ion-label position="stacked">Nombre:</ion-label>
-            <ion-text>{{ userData.nombre }}</ion-text>
-          </ion-item>
-          <ion-item>
-            <ion-label position="stacked">Email:</ion-label>
-            <ion-text>{{ userData.email }}</ion-text>
-          </ion-item>
-          <ion-item *ngIf="userData.telefono">
-            <ion-label position="stacked">Teléfono:</ion-label>
-            <ion-text>{{ userData.telefono }}</ion-text>
-          </ion-item>
-          <ion-item>
-            <ion-label position="stacked">Miembro desde:</ion-label>
-            <ion-text>{{ formatDate(userData.createdAt) }}</ion-text>
-          </ion-item>
-          <ion-item *ngIf="userData.ultimaReserva">
-            <ion-label position="stacked">Última Reserva:</ion-label>
-            <ion-text>{{ formatDate(userData.ultimaReserva) }}</ion-text>
-          </ion-item>
-        </ion-card-content>
-      </ion-card>
-      <ion-card *ngIf="!userData">
-        <ion-card-content>
-          <ion-text>Cargando datos del usuario o no hay datos disponibles.</ion-text>
-        </ion-card-content>
-      </ion-card>
+      <!-- Loading skeleton -->
+      <div *ngIf="isLoading">
+        <ion-card *ngFor="let item of [1,2,3]">
+          <ion-card-content>
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          </ion-card-content>
+        </ion-card>
+      </div>
+
+      <!-- Datos del usuario -->
+      <ion-list *ngIf="userData && !isLoading">
+        <ion-item>
+          <ion-icon name="person-outline" slot="start"></ion-icon>
+          <ion-label position="stacked">Nombre</ion-label>
+          <ion-text>{{ userData.nombre }}</ion-text>
+        </ion-item>
+        <ion-item>
+          <ion-icon name="mail-outline" slot="start"></ion-icon>
+          <ion-label position="stacked">Email</ion-label>
+          <ion-text>{{ userData.email }}</ion-text>
+        </ion-item>
+        <ion-item *ngIf="userData.telefono">
+          <ion-icon name="call-outline" slot="start"></ion-icon>
+          <ion-label position="stacked">Teléfono</ion-label>
+          <ion-text>{{ userData.telefono }}</ion-text>
+        </ion-item>
+        <ion-item>
+          <ion-icon name="calendar-outline" slot="start"></ion-icon>
+          <ion-label position="stacked">Miembro desde</ion-label>
+          <ion-text>{{ formatDate(userData.createdAt) }}</ion-text>
+        </ion-item>
+      </ion-list>
+
+      <!-- Estado de error -->
+      <div *ngIf="hasError && !isLoading" class="error-state">
+        <ion-icon name="warning-outline" color="danger"></ion-icon>
+        <p>Error al cargar los datos del perfil</p>
+        <ion-button fill="outline" size="small" (click)="loadData()">
+          Reintentar
+        </ion-button>
+      </div>
     </div>
 
+    <!-- Sección Historial -->
     <div *ngSwitchCase="'historial'">
-      <ion-list *ngIf="userReservas.length > 0">
-        <ion-item *ngFor="let reserva of userReservas">
+      <!-- Loading skeleton -->
+      <div *ngIf="isLoading">
+        <ion-card *ngFor="let item of [1,2,3]">
+          <ion-card-content>
+            <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
+            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+          </ion-card-content>
+        </ion-card>
+      </div>
+
+      <!-- Lista de reservas -->
+      <ion-list *ngIf="userReservas.length > 0 && !isLoading">
+        <ion-item *ngFor="let reserva of userReservas; trackBy: trackByReserva">
           <ion-label>
             <h2>{{ reserva.servicio }}</h2>
-            <p>Fecha: {{ formatDate(reserva.fecha) }}</p>
-            <p>Hora: {{ reserva.hora }}</p>
-            <p>Precio: {{ reserva.precio | currency:'USD':'symbol':'1.2-2' }}</p>
-            <p>Estado: {{ reserva.estado }}</p>
+            <p>{{ formatDate(reserva.fecha) }} </p>
+            <p> {{ reserva.hora }}</p>
+            <p>{{ reserva.precio | currency:'USD':'symbol':'1.2-2' }}</p>
+            <ion-badge [color]="getStatusColor(reserva.estado)">
+              {{ reserva.estado }}
+            </ion-badge>
           </ion-label>
         </ion-item>
       </ion-list>
-      <ion-card *ngIf="userReservas.length === 0">
-        <ion-card-content>
-          <ion-text>No tienes reservas en tu historial.</ion-text>
-        </ion-card-content>
-      </ion-card>
+
+      <!-- Estado vacío -->
+      <div *ngIf="userReservas.length === 0 && !isLoading && !hasError" class="empty-state">
+        <ion-icon name="document-text-outline"></ion-icon>
+        <p>No tienes reservas en tu historial</p>
+      </div>
+
+      <!-- Estado de error -->
+      <div *ngIf="hasError && !isLoading" class="error-state">
+        <ion-icon name="warning-outline" color="danger"></ion-icon>
+        <p>Error al cargar las reservas</p>
+        <ion-button fill="outline" size="small" (click)="loadData()">
+          Reintentar
+        </ion-button>
+      </div>
     </div>
   </div>
 </ion-content>

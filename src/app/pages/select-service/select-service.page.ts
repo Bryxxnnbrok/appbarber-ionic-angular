@@ -62,7 +62,7 @@ export class SelectServicePage implements OnInit {
       nombre: 'Combo Completo (Corte + Barba)',
       duracionMin: 60,
       precio: 55.00,
-      img: '/assets/images/barber.jpg',
+      img: '/assets/images/combo1.jpg',
       categoria: 'Combo'
     },
     {

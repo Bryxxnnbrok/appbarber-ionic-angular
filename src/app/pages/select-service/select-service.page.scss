@@ -2,18 +2,18 @@
 .header {
   position: sticky;
   top: 0;
-  background-color: #384455;
+  background-color: var(--app-color-fondo-principal);
   padding: 16px;
   z-index: 100;
   box-shadow: rgba(0, 0, 0, 0.08) 0 2px 4px;
 
   .category-select {
     width: 100%;
-    background-color: #959EB2;
+    background-color: var(--ion-color-medium);
     border-radius: 8px;
-    --background: #959EB2;
-    --color: #F5F5F5;
-    --placeholder-color: #F5F5F5;
+    --background: var(--ion-color-medium);
+    --color: var(--ion-color-light);
+    --placeholder-color: var(--ion-color-light);
     --placeholder-opacity: 0.8;
     padding: 10px;
     font-family: 'Playfair Display', serif;
@@ -21,7 +21,7 @@
 }
 
 .services-container {
-  background-color: #384455;
+  background-color: var(--app-color-fondo-principal);
   padding: 16px;
   min-height: calc(100% - 60px); // Altura del header
 
@@ -39,7 +39,7 @@
 }
 
 .service-card {
-  background-color: #F5F5F5;
+  background-color: var(--ion-color-light);
   border-radius: 8px;
   overflow: hidden;
   box-shadow: rgba(105, 95, 95, 0.08) 0 2px 4px;
@@ -67,7 +67,7 @@
     flex: 1;
 
     .service-name {
-      color: #384455;
+      color: var(--app-color-fondo-principal);
       font-family: 'Playfair Display', serif;
       font-size: 14px;
       margin: 0 0 8px 0;
@@ -91,13 +91,13 @@
 
       .service-duration, .service-price {
         font-size: 12px;
-        color: #384455;
+        color: var(--app-color-fondo-principal);
       }
     }
 
     .book-button {
-      --background: #384455;
-      --color: #F5F5F5;
+      --background: var(--app-color-fondo-principal);
+      --color: var(--ion-color-light);
       --border-radius: 8px;
       --box-shadow: none;
       font-size: 12px;
@@ -117,7 +117,7 @@
 
 
   p {
-    color: #F5F5F5;
+    color: var(--ion-color-light);
     font-family: 'Playfair Display', serif;
     text-align: center;
   }
@@ -131,8 +131,8 @@
   .dropdown-button {
     width: 100%;
     height: 38px;
-    background: #ECE9E9;
-    border: 1px solid #B8B8B8;
+    background: var(--ion-color-light-shade);
+    border: 1px solid var(--ion-color-medium-shade);
     border-radius: 12px;
     padding: 0 30px 0 10px;
     display: flex;
@@ -141,17 +141,17 @@
     cursor: pointer;
     font-family: 'Playfair Display', serif;
     font-size: 13px;
-    color: #384455;
+    color: var(--app-color-fondo-principal);
     transition: all 0.2s ease;
     box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
 
     &:hover {
-      border-color: #999999;
+      border-color: var(--ion-color-medium);
     }
 
     &:focus {
       outline: none;
-      border-color: #384455;
+      border-color: var(--app-color-fondo-principal);
       box-shadow: 0 0 0 2px rgba(56, 68, 85, 0.2);
     }
 
@@ -170,14 +170,14 @@
       height: 0;
       border-left: 4px solid transparent;
       border-right: 4px solid transparent;
-      border-top: 4px solid #384455;
+      border-top: 4px solid var(--app-color-fondo-principal);
       transition: transform 0.2s ease;
     }
   }
 
   &.open {
     .dropdown-button {
-      border-color: #384455;
+      border-color: transparent;
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;
       border-top-left-radius: 12px;
@@ -194,8 +194,8 @@
     top: 100%;
     left: 0;
     right: 0;
-    background: #ECE9E9B8;
-    border: 1px solid #384455;
+    background: #ffffff; // Usar RGBA para la opacidad
+    border: 1px solid transparent;
     border-top: none;
     border-radius: 0 0 12px 12px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
@@ -205,15 +205,15 @@
 
     .dropdown-item {
       padding: 8px 10px;
-      color: #384455;
+      color: var(--app-color-fondo-principal);
       font-family: 'Playfair Display', serif;
       font-size: 13px;
       cursor: pointer;
       transition: background-color 0.15s ease;
-      border-bottom: 1px solid #D0D0D0;
+      border-bottom: 1px solid var(--ion-color-light-shade);
 
       &:hover {
-        background-color: #F5F5F5;
+        background-color: var(--ion-color-light);
       }
 
       &:last-child {

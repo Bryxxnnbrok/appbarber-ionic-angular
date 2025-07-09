@@ -59,13 +59,13 @@ export class LimpiezaFacialPage {
       categoria: 'Limpieza Facial Clásica',
       nombre: 'Eliminación de impurezas y puntos negros',
       precio: 30.00,
-      imagen: 'assets/images/facial_1.jpg'
+      imagen: 'assets/images/facial_3.jpg'
     },
     {
       categoria: 'Limpieza Facial Profunda',
       nombre: 'Con extracción, vapor y mascarilla',
       precio: 45.00,
-      imagen: 'assets/images/facial_2.jpg'
+      imagen: 'assets/images/facial_3.jpg'
     },
     {
       categoria: 'Exfoliación Facial',
@@ -83,7 +83,7 @@ export class LimpiezaFacialPage {
       categoria: 'Tratamiento Antiacné',
       nombre: 'Limpieza y control de brotes',
       precio: 35.00,
-      imagen: 'assets/images/facial_5.png'
+      imagen: 'assets/images/facial_3.jpg'
     }
   ];
 

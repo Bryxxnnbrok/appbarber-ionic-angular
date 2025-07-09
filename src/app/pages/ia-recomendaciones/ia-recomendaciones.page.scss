@@ -1,30 +1,16 @@
 /*
- * Paleta de Colores: Azul Vintage Minimalista (Versión 2)
- */
-:root {
-  --ion-background-color: #d6e2f0; // Fondo azul vintage, más presente
-  --ion-text-color: #2c3e50; // Azul naval oscuro para texto
-  --ion-color-primary: #2980b9; // Un azul más vivo para acentos
-  --ion-color-primary-contrast: #ffffff;
-  --ion-toolbar-background: #ffffff;
-  --ion-border-color: #c8d6e5; // Borde sutil, en tono con el fondo
-
-  --user-message-background: #2980b9;
-  --user-message-color: #ffffff;
-  --bot-message-background: #ffffff;
-  --bot-message-color: #2c3e50;
-  --input-background: #ffffff;
-  --placeholder-color: #85929e;
-}
-
-/*
  * Estilos Generales
  */
 ion-header {
   ion-toolbar {
-    --background: var(--ion-toolbar-background);
+    --background: #292929;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    --padding-top: 15px;
+    --padding-bottom: 15px;
+    --padding-start: 15px;
+    --padding-end: 15px;
   }
+
   ion-title {
     font-weight: 600;
     color: var(--ion-text-color);
@@ -32,7 +18,7 @@ ion-header {
 }
 
 ion-content {
-  --background: #1b1b29;
+  --background: var(--app-color-fondo-principal);
 }
 
 .chat-container {
@@ -55,6 +41,7 @@ ion-content {
 
   .logo-wrapper {
     margin-bottom: 24px;
+
     .logo-image {
       width: 100px;
       height: 100px;
@@ -110,26 +97,31 @@ ion-content {
     padding: 12px 18px;
     border-radius: 20px;
     line-height: 1.5;
+
     p {
       margin: 0;
-      text-align: justify; /* CORRECCIÓN: Texto justificado */
+      text-align: justify;
+      /* CORRECCIÓN: Texto justificado */
     }
   }
 
   &.bot {
-    align-items: flex-start; /* CORRECCIÓN: Alinea el avatar y el texto arriba */
+    align-items: flex-start;
+
     .avatar-wrapper {
       margin-right: 10px;
-      flex-shrink: 0; /* CORRECCIÓN: Evita que el avatar se encoja */
+      flex-shrink: 0;
+
       .bot-avatar {
         width: 40px;
         height: 40px;
         border-radius: 50%;
       }
     }
+
     .text-wrapper {
-      background: var(--bot-message-background);
-      color: var(--bot-message-color);
+      background: #D5C2BD;
+      color: var(--app-color-chat-texto-principal);
       box-shadow: 0 2px 5px rgba(44, 62, 80, 0.1);
       border-top-left-radius: 5px;
     }
@@ -137,11 +129,12 @@ ion-content {
 
   &.user {
     .text-wrapper {
-      background: var(--user-message-background);
-      color: var(--user-message-color);
+      background: #212734;
+      color: var(--app-color-blanco);
       box-shadow: 0 2px 5px rgba(52, 152, 219, 0.3);
       border-top-right-radius: 5px;
     }
+
     .message-image {
       max-width: 100%;
       border-radius: 15px;
@@ -153,39 +146,77 @@ ion-content {
 /*
  * Footer y Área de Entrada
  */
+/*
+ * Footer y Área de Entrada
+ */
 ion-footer {
   .input-container {
     display: flex;
     align-items: center;
+
     padding: 8px 10px;
-    background-color: var(--ion-toolbar-background);
+    background-color: #292929;
+
     border-top: 1px solid var(--ion-border-color);
 
+    // Botón de adjuntar (cámara)
+    .attach-button {
+      width: 44px;
+      height: 44px;
+      --background: transparent;
+      color: #1d354e;
+      font-size: 2rem;
+      margin-right: -5px;
+      /* Añade un pequeño margen a la derecha */
+
+      ion-icon {
+        font-size: 2rem;
+        color: #D5C2BD;
+      }
+    }
+
+    // Input de mensaje
     .message-input {
+
+      caret-color: #D5C2BD;
       flex: 1;
-      background: var(--ion-background-color);
-      border: 1px solid var(--ion-border-color);
+      background: #384455;
+      border: 1px solid #D5C2BD;
       border-radius: 25px;
-      padding: 12px 18px;
       margin: 0 8px;
+      /* Ajusta los márgenes horizontales */
       font-size: 1rem;
       --padding-start: 18px;
       --padding-end: 18px;
-      --placeholder-color: var(--placeholder-color);
-      max-height: 120px;
+      --placeholder-color: var(--app-color-chat-placeholder);
+      color: #fff;
+      max-height: 50px;
+      min-height: 40px;
+      resize: none;
+
+
     }
 
-    ion-button {
-      --padding-start: 0;
-      --padding-end: 0;
-      width: 48px;
-      height: 48px;
-      font-size: 1.5rem;
-      color: var(--ion-color-primary);
+    // Botón de enviar (send)
+    .send-button {
+      width: 44px;
+      /* Aumenta el tamaño para igualar al de cámara */
+      height: 44px;
+      --background: #D5C2BD !important;
+      margin-left: 5px;
+      /* Añade un pequeño margen a la izquierda */
+      font-size: 1rem;
+      border-radius: 50%;
+
+      ion-icon {
+        font-size: 1.5rem;
+        color: #384455;
+      }
 
       &[disabled] {
-        color: var(--placeholder-color);
-        opacity: 0.6;
+        opacity: 0.5;
+        --background: #bdbdbd;
+        color: #384455;
       }
     }
   }
@@ -195,6 +226,13 @@ ion-footer {
  * Animaciones
  */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

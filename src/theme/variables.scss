@@ -1,42 +1,56 @@
-// For information on how to create your own theme, please see:
-// http://ionicframework.com/docs/theming/
+/*
+================================================================================
+ ARCHIVO DE VARIABLES GLOBALES DE ESTILO
+================================================================================
+ Este archivo es la única fuente de verdad para los colores, fuentes y otros
+ estilos reutilizables en toda la aplicación.
 
-// Ionic Variables and Th// src/theme/variables.scss
+ Estructura:
+ 1. Fuentes de Google.
+ 2. Paleta de colores estándar de Ionic.
+ 3. Paleta de colores personalizada para la aplicación.
+ 4. Estilos base para el modo claro (por defecto).
+ 5. Estilos para el modo oscuro.
+================================================================================
+*/
+
+/* 1. Fuentes de Google */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500&family=Hahmlet:wght@100;300;400;500;600&display=swap');
 
 :root {
-  /** primary **/
-  --ion-color-primary: #D4B896;
-  --ion-color-primary-rgb: 212, 184, 150;
-  --ion-color-primary-contrast: #000000;
-  --ion-color-primary-contrast-rgb: 0, 0, 0;
-  --ion-color-primary-shade: #bb9c7a;
-  --ion-color-primary-tint: #d8bfa1;
+  /*
+  ==============================================================================
+  2. Paleta de colores estándar de Ionic
+  ==============================================================================
+  Estos colores son utilizados por los componentes de Ionic por defecto.
+  Se recomienda mantenerlos para asegurar la compatibilidad.
+  */
+  --ion-color-primary: #D5C2BD;
+  --ion-color-primary-rgb: 56, 128, 255;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  
+  --ion-color-primary-tint: #ff2222;
 
-  /** secondary **/
-  --ion-color-secondary: #4a5568;
-  --ion-color-secondary-rgb: 74, 85, 104;
+  --ion-color-secondary: #3dc2ff;
+  --ion-color-secondary-rgb: 61, 194, 255;
   --ion-color-secondary-contrast: #ffffff;
   --ion-color-secondary-contrast-rgb: 255, 255, 255;
-  --ion-color-secondary-shade: #41495c;
-  --ion-color-secondary-tint: #5c6577;
+  --ion-color-secondary-shade: #36abe0;
+  --ion-color-secondary-tint: #50c8ff;
 
-  /** tertiary **/
-  --ion-color-tertiary: #2d3748;
-  --ion-color-tertiary-rgb: 45, 55, 72;
+  --ion-color-tertiary-rgb: 82, 96, 255;
   --ion-color-tertiary-contrast: #ffffff;
   --ion-color-tertiary-contrast-rgb: 255, 255, 255;
-  --ion-color-tertiary-shade: #283040;
-  --ion-color-tertiary-tint: #42505a;
 
-  /** success **/
-  --ion-color-success: #2dd36f;
+
+  --ion-color-success: #384455;
   --ion-color-success-rgb: 45, 211, 111;
   --ion-color-success-contrast: #ffffff;
   --ion-color-success-contrast-rgb: 255, 255, 255;
-  --ion-color-success-shade: #28ba62;
+  --ion-color-success-shade: #42d77d;
   --ion-color-success-tint: #42d77d;
 
-  /** warning **/
   --ion-color-warning: #ffc409;
   --ion-color-warning-rgb: 255, 196, 9;
   --ion-color-warning-contrast: #000000;
@@ -44,7 +58,6 @@
   --ion-color-warning-shade: #e0ac08;
   --ion-color-warning-tint: #ffca22;
 
-  /** danger **/
   --ion-color-danger: #eb445a;
   --ion-color-danger-rgb: 235, 68, 90;
   --ion-color-danger-contrast: #ffffff;
@@ -52,7 +65,6 @@
   --ion-color-danger-shade: #cf3c4f;
   --ion-color-danger-tint: #ed576b;
 
-  /** dark **/
   --ion-color-dark: #222428;
   --ion-color-dark-rgb: 34, 36, 40;
   --ion-color-dark-contrast: #ffffff;
@@ -60,7 +72,6 @@
   --ion-color-dark-shade: #1e2023;
   --ion-color-dark-tint: #383a3e;
 
-  /** medium **/
   --ion-color-medium: #92949c;
   --ion-color-medium-rgb: 146, 148, 156;
   --ion-color-medium-contrast: #ffffff;
@@ -68,7 +79,6 @@
   --ion-color-medium-shade: #808289;
   --ion-color-medium-tint: #9d9fa6;
 
-  /** light **/
   --ion-color-light: #f4f5f8;
   --ion-color-light-rgb: 244, 245, 248;
   --ion-color-light-contrast: #000000;
@@ -76,38 +86,71 @@
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
 
-  // Colores personalizados para tu barbería
-  --barberia-dark-bg: #4a5568;
-  --barberia-darker-bg: #2d3748;
-  --barberia-accent: #D4B896;
-  --barberia-text-light: #a0aec0;
+  /*
+  ==============================================================================
+  3. Paleta de colores personalizada para la aplicación
+  ==============================================================================
+  Estos son los colores específicos de la marca y el diseño de la app.
+  */
+
+  /* Colores base */
+  --app-color-blanco: #ffffff;
+  --app-color-negro: #000000;
+
+  /* Fondos */
+  --app-color-fondo-principal: #384455; /* Azul grisáceo oscuro, usado en la mayoría de los fondos */
+  --app-color-fondo-secundario: #39424e; /* Tono similar al principal, para unificar */
+  --app-color-fondo-claro: #f4f5f8; /* Gris muy claro, casi blanco, para tarjetas y secciones */
+  --app-color-fondo-deshabilitado: #E8E8E8; /* Para elementos inactivos */
+  --app-color-gradiente-inicio: #4a5568; /* Color inicial para los gradientes de fondo (login, home) */
+  --app-color-gradiente-fin: #2d3748; /* Color final para los gradientes de fondo */
+
+  /* Textos */
+  --app-color-texto-primario: #F7FAFC; /* Blanco roto para texto sobre fondos oscuros */
+  --app-color-texto-secundario: #D5C2BD; /* Beige para textos destacados o secundarios */
+  --app-color-texto-oscuro: #333333; /* Negro suave para texto sobre fondos claros */
+  --app-color-texto-gris: #777777; /* Gris medio para textos de menor importancia */
+  --app-color-texto-gris-oscuro: #555555; /* Gris más oscuro para subtítulos */
+  --app-color-texto-gris-medio: #666666; /* Gris para el historial y perfil */
+  --app-color-texto-gris-claro: #8c8c8c; /* Gris claro para párrafos (usado en explore-container) */
+  --app-color-texto-deshabilitado: #999999; /* Para textos de elementos inactivos */
+
+  /* Acentos y Botones */
+  --app-color-acento-primario: #D5C2BD; /* Beige, color principal para botones y enlaces */
+  --app-color-acento-secundario: #C0A0A0; /* Tono rosado para acentos sutiles */
+  --app-color-acento-terciario: #5C5E90; /* Púrpura para elementos seleccionados (calendario) */
+  --app-color-acento-dorado: #d4b896; /* Dorado/Beige para insignias (badges) en el historial */
+
+  /* Componente de Chat (IA) */
+  --app-color-chat-fondo: #d6e2f0; /* Fondo general del chat */
+  --app-color-chat-texto-principal: #2c3e50; /* Texto principal del chat */
+  --app-color-chat-fondo-usuario: #2980b9; /* Fondo de los mensajes del usuario */
+  --app-color-chat-fondo-bot: #ffffff; /* Fondo de los mensajes del bot */
+  --app-color-chat-borde: #c8d6e5; /* Color para los bordes en el chat */
+  --app-color-chat-placeholder: #85929e; /* Color para el texto de placeholder en el input */
+
+  /* Varios */
+  --app-color-borde-menu: #424242; /* Borde del menú lateral */
 }
 
-// Estilos globales
-.barberia-bg {
-  background: var(--barberia-dark-bg);
+
+/*
+================================================================================
+4. Estilos base para el modo claro (por defecto)
+================================================================================
+*/
+body {
+  /* Fuentes */
+  --ion-font-family: 'Tinos', serif;
+
+  /* Asignación de la paleta personalizada a las variables de Ionic */
+  --ion-background-color: var(--app-color-fondo-principal);
+  --ion-text-color: var(--app-color-texto-primario);
+
+  --ion-card-background: var(--app-color-blanco);
 }
 
-.barberia-darker-bg {
-  background: var(--barberia-darker-bg);
+h1, h2, h3, h4, h5, h6, .ion-title {
+  font-family: 'Tinos', serif;
 }
 
-.barberia-accent {
-  color: var(--barberia-accent);
-}
-
-.barberia-button {
-  --background: var(--barberia-accent);
-  --color: #000000;
-  --border-radius: 25px;
-  font-weight: 500;
-}
-
-
-.barberia-input {
-  --background: transparent;
-  --color: white;
-  --border-color: var(--barberia-text-light);
-  border-bottom: 1px solid var(--barberia-text-light);
-  border-radius: 0;
-}

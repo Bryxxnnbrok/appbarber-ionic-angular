@@ -142,7 +142,7 @@
         <div class="custom-dropdown" [class.open]="isDropdownOpen">
           <div class="dropdown-button" (click)="toggleDropdown()">
             <span class="dropdown-text">{{ selectedCategory || '¿Qué servicio buscas?...' }}</span>
-            <span class="dropdown-arrow">▼</span>
+            <span class="dropdown-arrow"></span>
           </div>
           <div class="dropdown-menu" *ngIf="isDropdownOpen">
             <div

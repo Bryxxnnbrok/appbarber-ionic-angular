@@ -5,9 +5,17 @@ Estilos Globales de la Página
 */
 
 // Se aplica el color de fondo tanto a la cabecera como al contenido
-ion-toolbar, ion-content {
-  --background: #39424e; // Un gris azulado oscuro
-  --color: #ffffff; // Color de texto principal (blanco)
+ion-toolbar{
+  --background: #000000;
+  --color: #D5C2BD;
+  --padding-top: 15px;
+    --padding-bottom: 15px;
+    --padding-start: 15px;
+    --padding-end: 15px;
+}
+ ion-content {
+  --background: #384455;
+  --color: var(--app-color-blanco);
 }
 
 ion-title {
@@ -29,29 +37,36 @@ Estilos para las Tarjetas de Cortes (ion-card)
 */
 
 ion-card {
-  --background: #f4f5f8; // Fondo casi blanco para las tarjetas
+  --background: var(--app-color-fondo-claro);
   margin: 16px;
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  color: #333; // Color de texto oscuro para el contenido de la tarjeta
+  color: var(--app-color-texto-oscuro);
 }
 
 // Quitamos el fondo del ion-item para que tome el de la tarjeta
 ion-item {
+  --min-height: 100px; // Asegura que el item tenga una altura mínima
   --background: transparent;
   --padding-start: 0; // Eliminamos padding innecesario
+  --inner-padding-end: 16px; /* Añade espacio al final del item */
+
 }
 
 // Estilo para la imagen miniatura
 ion-thumbnail {
-  --size: 90px; // Tamaño de la imagen estaba en 90
-  --border-radius: 0 12px 12px 0; // Redondea solo las esquinas izquierdas 12px 0 0 12px
-  margin-right: 16px;
+  --size: 100px; // Tamaño de la imagen estaba en 90
+  --border-radius: 0 ; // Redondea solo las esquinas izquierdas 12px 0 0 12px
+  margin: 0;
+  height: 100%;
+  min-height: 100px;
+  margin-right: 12px; /* Nuevo: espacio entre imagen y texto */
 
   img {
     width: 100%; //estaba en 100%
     height: 100%;
     object-fit: cover; // Asegura que la imagen cubra el espacio sin deformarse
+    display: block; // Asegura que la imagen ocupe todo el espacio del thumbnail
   }
 }
 
@@ -60,24 +75,28 @@ ion-thumbnail {
 Estilos para los Textos dentro de la Tarjeta
 ================================================================================
 */
+ion-label {
+  margin-inline-start: 8px; /* Espacio adicional entre imagen y texto */
+}
 
 .category-title {
   font-size: 0.9em;
   font-weight: 600;
-  color: #555; // Color para el título de la categoría
+  color: var(--app-color-texto-gris-oscuro);
+  margin-bottom: 6px;
 }
 
 .name-text {
   font-size: 0.8em;
-  color: #777; // Color para el nombre del corte
-  margin-top: 4px;
+  color: var(--app-color-texto-gris);
+  margin: 4px;
 }
 
 .price-text {
   font-size: 1em;
   font-weight: bold;
-  color: #39424e; // Color del precio, igual al fondo principal
-  margin-top: 8px;
+  color: var(--app-color-fondo-secundario);
+  margin-top: 10px;
 }
 
 /*
@@ -92,8 +111,8 @@ Estilo para el indicador de scroll
 
   ion-icon {
     font-size: 2em;
-    color: #f4f5f8; // Blanco, como el texto del header
-    animation: bounce 2s infinite; // Animación de rebote
+    color: var(--app-color-fondo-claro);
+    animation: bounce 2s infinite;
   }
 }
 
@@ -123,35 +142,5 @@ Estilo para el indicador de scroll
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-// La parte del Menú Lateral:
-
-// Menú lateral
-ion-menu {
-  ion-content {
-    --background: var(--background-dark);
-  }
-  
-  ion-list {
-    background: transparent;
-  }
-  
-  ion-item {
-    --background: transparent;
-    --color: var(--text-primary);
-    
-    ion-icon {
-      color: var(--text-primary);
-    }
-    
-    ion-label {
-      color: var(--text-primary);
-    }
-    
-    &:hover {
-      --background: rgba(255, 255, 255, 0.1);
-    }
   }
 }

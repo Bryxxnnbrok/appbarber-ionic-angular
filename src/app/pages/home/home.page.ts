@@ -35,8 +35,7 @@ import { AuthService } from '../../services/auth.service'; // Importar AuthServi
     IonHeader, 
     IonToolbar, 
     IonButtons, 
-    IonButton, 
-    IonIcon, 
+    IonButton,  
     IonSearchbar, 
     IonFabButton
   ],
@@ -53,25 +52,25 @@ export class HomePage implements OnInit {
     {
       id: 'cortes',
       name: 'cortes de cabello',
-      description: 'mira nuestro catalogo de cortes que brindamos',
+      description: 'aqui podras ver diferentes estilos y cortes de cabello.',
       image: 'assets/images/cortes-cabello.jpg'
     },
     {
       id: 'skincare',
       name: 'skincare',
-      description: 'aqui podras ver una serie de mascarillas de rostro que brindamos',
+      description: 'aqui podras ver diferentes mascarillas para el cuidado de tu rostro.',
       image: 'assets/images/skincare.jpg'
     },
     {
       id: 'barba',
       name: 'arreglo de barba',
-      description: 'diferentes estilos de barba para tu rostro',
+      description: 'aqui podras ver diferentes estilos y diseños de barba para tu rostro.',
       image: 'assets/images/arreglo-barba.jpg'
     },
     {
       id: 'cejas',
       name: 'arreglo de cejas',
-      description: 'perfilado y arreglo profesional de cejas',
+      description: 'aqui podras ver distintos perfilados y arreglos profesionales de cejas.',
       image: 'assets/images/arreglo-cejas.jpg'
     }
   ];

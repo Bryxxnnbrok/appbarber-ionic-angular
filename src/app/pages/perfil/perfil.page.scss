@@ -1,113 +1,129 @@
-/* Estilos específicos para la página de perfil */
-app-perfil {
-  ion-content {
-    background-color: #ff0000 !important;
-  }
+// Variables principales
+:host {
+  --color-azul-oscuro: #384455;
+  --color-beige: #D5C2BD;
+  --color-texto: #F7FAFC;
+  --color-gris: #92949c;
+  --color-beige1: #a76350;
+}
 
-  .profile-header {
-    background-color: #ffffff !important;
-    padding: 20px;
-    text-align: center;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-
-    .profile-avatar {
-      width: 100px;
-      height: 100px;
-      margin: 0 auto 15px;
-      border: 3px solid #4a5568 !important;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .profile-name {
-      color: #4a5568 !important;
-      font-size: 1.3rem;
-      font-weight: 600;
-      margin-bottom: 5px;
-      letter-spacing: 0.5px;
-    }
-
-    .profile-email {
-      color: #666666 !important;
-      font-size: 0.9rem;
-      margin: 0;
-    }
-  }
-
+// Contenedor del segmento con scroll
+.segmento-scroll {
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  padding: 0 16px;
+  
   ion-segment {
-    background-color: #ffffff !important;
-    border-radius: 8px;
-    margin: 15px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-    border: 1px solid rgba(0, 0, 0, 0.05) !important;
-
-    ion-segment-button {
-      --color: #666666 !important;
-      --color-checked: #4a5568 !important;
-      --indicator-color: transparent !important;
-      font-weight: 500;
-      min-height: 40px;
-
-      &.segment-button-checked {
-        background-color: rgba(212, 184, 150, 0.2) !important;
-      }
-    }
+    min-width: max-content;
+    display: flex;
   }
-
-  ion-list {
-    background-color: #ffffff !important;
-    margin: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-
-    ion-item {
-      --min-height: 56px !important;
-      --padding-start: 16px !important;
-      --padding-end: 16px !important;
-      --border-color: rgba(0, 0, 0, 0.05) !important;
-
-      ion-icon {
-        color: #4a5568 !important;
-        font-size: 1.1rem;
-        margin-right: 12px;
-      }
-
-      ion-label {
-        color: #666666 !important;
-        font-size: 0.9rem;
-      }
-
-      ion-text {
-        color: #000000 !important;
-        font-weight: 500;
-      }
-    }
+  
+  &::-webkit-scrollbar {
+    display: none;
   }
+}
 
-  .empty-history {
-    text-align: center;
-    padding: 40px 20px;
+// Estilos del segmento
+ion-segment {
+  --background: var(--color-azul-oscuro);
+  margin: 1rem 0;
+  
+  ion-segment-button {
+    --color: var(--color-gris);
+    --color-checked: var(--color-beige);
+    --indicator-color: transparent;
+    transition: all 0.3s ease;
+  }
+}
 
+// Estilos de listas
+ion-list {
+  background: transparent;
+  
+  ion-item {
+    --background: transparent;
+    --border-color: rgba(213, 194, 189, 0.1);
+    margin-bottom: 0.5rem;
+    transition: transform 0.2s ease;
+    
+    &:active {
+      transform: scale(0.98);
+    }
+    
     ion-icon {
-      color: #d4b896 !important;
-      font-size: 2.5rem;
-      margin-bottom: 15px;
+      color: var(--color-beige);
     }
-
-    p {
-      color: #666666 !important;
-      font-size: 0.95rem;
+    
+    ion-label {
+      color: var(--color-texto);
+      
+      h2 {
+        font-weight: 500;
+        margin-bottom: 0.25rem;
+      }
+      
+      p {
+        color: var(--color-gris);
+        font-size: 0.875rem;
+      }
+    }
+    
+    ion-text {
+      color: var(--color-texto);
     }
   }
+}
 
-  h2 {
-    color: #4a5568 !important;
-    font-size: 1.2rem;
-    font-weight: 600;
+// Estados vacío y error
+.empty-state,
+.error-state {
+  text-align: center;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+  ion-icon {
+    font-size: 3rem;
+    color: var(--color-beige);
+    opacity: 0.5;
+    margin-bottom: 1rem;
   }
+  
+  p {
+    color: var(--color-gris);
+    margin-bottom: 1rem;
+  }
+  
+  ion-button {
+    --color: var(--color-beige);
+    --border-color: var(--color-beige);
+  }
+}
 
-  h3 {
-    color: #4a5568 !important;
-    font-size: 1.1rem;
-    font-weight: 500;
+// Badges de estado
+::ng-deep ion-badge[color="success"] {
+  --background: var(--color-beige1) !important; // Fondo azul
+  --color: #fff !important;         // Texto blanco
+  background: var(--color-beige1) !important;   // Fallback directo
+  color: #fff !important;           // Fallback directo
+  font-weight: 400 !important;      // Quita la negrita si la tiene
+  border-radius: 8px !important;    // Opcional: badge más redondeado
+  box-shadow: none !important;      // Opcional: sin sombra
+}
+
+  
+
+
+// Responsive para tablets
+@media (min-width: 768px) {
+  .segmento-scroll {
+    padding: 0 24px;
+  }
+  
+  ion-list {
+    max-width: 600px;
+    margin: 0 auto;
   }
 }

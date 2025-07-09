@@ -1,23 +1,11 @@
-// Variables exactas del diseño
-:root {
-  --bg-primary: #4a5568;
-  --bg-secondary: #2d3748;
-  --accent-beige: #d4b896;
-  --text-primary: #ffffff;
-  --text-secondary: #a0aec0;
-  --text-muted: #718096;
-  --border-color: #e2e8f0;
-  --input-border: #4a5568;
-}
-
 * {
   box-sizing: border-box;
   font-family: 'Hahmlet', serif;
 }
 
 .registro-content {
-  --background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
-  --color: #ffffff;
+  --background: linear-gradient(135deg, var(--app-color-gradiente-inicio) 0%, var(--app-color-gradiente-fin) 100%);
+  --color: var(--app-color-blanco);
   --padding-top: 0;
   --padding-bottom: 0;
   --padding-start: 0;
@@ -53,7 +41,7 @@
 
 // Título exacto
 .registro-title {
-  color: #D5C2BD;
+  color: var(--app-color-texto-secundario);
   font-size: 26px;
   font-weight: 300;
   margin: 0 0 40px 0;
@@ -75,16 +63,16 @@
   
   ion-input.custom-input {
     --background: transparent;
-    --color: #D5C2BD;
-    --placeholder-color: #D5C2BD;
+    --color: var(--app-color-texto-secundario);
+    --placeholder-color: var(--app-color-texto-secundario);
     --placeholder-opacity: 1;
     --border-radius: 0;
     --border-color: transparent;
     --border-style: none;
     --border-width: 0;
-    --highlight-color-focused: #D5C2BD;
-    --highlight-color-valid: #D5C2BD;
-    --highlight-color-invalid: #D5C2BD;
+    --highlight-color-focused: var(--app-color-texto-secundario);
+    --highlight-color-valid: var(--app-color-texto-secundario);
+    --highlight-color-invalid: var(--app-color-texto-secundario);
     --padding-start: 0;
     --padding-end: 0;
     --padding-top: 12px;
@@ -92,26 +80,26 @@
     
     font-size: 16px;
     font-weight: 300;
-    border-bottom: 1px solid #D5C2BD;
+    border-bottom: 1px solid var(--app-color-texto-secundario);
     border-radius: 0;
     transition: border-color 0.3s ease;
     
     &.ion-focused {
-      border-bottom-color: #D5C2BD;
+      border-bottom-color: var(--app-color-texto-secundario);
     }
     
     &.ion-valid {
-      border-bottom-color: #D5C2BD;
+      border-bottom-color: var(--app-color-texto-secundario);
     }
     
     &.ion-invalid {
-      border-bottom-color: #D5C2BD;
+      border-bottom-color: var(--app-color-texto-secundario);
     }
   }
   
   &.password-group {
     .password-toggle-btn {
-      --color: #D5C2BD;
+      --color: var(--app-color-texto-secundario);
       --background: transparent;
       --background-hover: transparent;
       --background-activated: transparent;
@@ -127,11 +115,11 @@
       
       .password-toggle {
         font-size: 18px;
-        color: #D5C2BD;
+        color: var(--app-color-texto-secundario);
         transition: color 0.3s ease;
         
         &:hover {
-          color: #D5C2BD;
+          color: var(--app-color-texto-secundario);
         }
       }
     }
@@ -140,10 +128,10 @@
 
 // Botón principal exacto adaptado para ion-button
 ion-button.registro-button {
-  --background: #D5C2BD;
-  --background-hover: #c5a880;
-  --background-activated: #c5a880;
-  --color: #4a5568;
+  --background: var(--app-color-acento-primario);
+  --background-hover: var(--app-color-acento-dorado);
+  --background-activated: var(--app-color-acento-dorado);
+  --color: var(--app-color-gradiente-inicio);
   --border-radius: 25px;
   --box-shadow: none;
   --ripple-color: rgba(74, 85, 104, 0.2);
@@ -164,7 +152,7 @@ ion-button.registro-button {
   }
   
   ion-spinner {
-    --color: #4a5568;
+    --color: var(--app-color-gradiente-inicio);
     width: 20px;
     height: 20px;
   }
@@ -188,7 +176,7 @@ ion-button.registro-button {
     --background: transparent;
     --background-hover: transparent;
     --background-activated: transparent;
-    --color: #D5C2BD;
+    --color: var(--app-color-texto-secundario);
     --ripple-color: rgba(212, 184, 150, 0.2);
     --box-shadow: none;
     --padding-start: 4px;

@@ -1,11 +1,11 @@
 // Estilos específicos para la página de selección de fecha
 .content-container {
-  padding: 0; // Removemos padding inicial para que la imagen ocupe todo el ancho
+  padding: 0;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  background-color: #384455;
-  height: 100vh; // Altura completa de la ventana
+  background-color: var(--app-color-fondo-principal);
+  height: 100vh;
   overflow-y: auto;
 
   // Ocultar scrollbar pero mantener funcionalidad
@@ -49,7 +49,7 @@
   }
 
   .main-title {
-    color: #D5C2BD;
+    color: var(--app-color-texto-secundario);
     font-family: 'Playfair Display', serif;
     font-size: 28px;
     margin: 0 0 10px 0;
@@ -60,7 +60,7 @@
 
 .section {
   h2 {
-    color: #D5C2BD;
+    color: var(--app-color-texto-secundario);
     font-family: 'Playfair Display', serif;
     font-size: 18px;
     margin-bottom: 10px;
@@ -74,7 +74,7 @@
 
 // Estilos para el calendario personalizado
 .figma-calendar {
-  background-color: #959EB2;
+  background-color: var(--ion-color-medium);
   border-radius: 8px;
   overflow: hidden;
   box-shadow: rgba(0, 0, 0, 0.08) 0 2px 4px;
@@ -86,12 +86,12 @@
     justify-content: space-between;
     align-items: center;
     padding: 10px;
-    background-color: #959EB2;
+    background-color: var(--ion-color-medium);
 
     .nav-btn {
       background: none;
       border: none;
-      color: #384455;
+      color: var(--app-color-fondo-principal);
       font-size: 18px;
       cursor: pointer;
       width: 30px;
@@ -105,7 +105,7 @@
 
     .month-year {
       font-family: 'Playfair Display', serif;
-      color: #384455;
+      color: var(--app-color-fondo-principal);
       font-size: 18px;
       flex-grow: 1;
       text-align: center;
@@ -126,7 +126,7 @@
         text-align: center;
         font-family: 'Playfair Display', serif;
         font-size: 14px;
-        color: #384455;
+        color: var(--app-color-fondo-principal);
         padding: 5px 0;
       }
     }
@@ -144,18 +144,18 @@
         align-items: center;
         font-family: 'Playfair Display', serif;
         font-size: 14px;
-        color: #384455;
+        color: var(--app-color-fondo-principal);
         cursor: pointer;
         border-radius: 50%;
 
         &.selected {
-          background-color: #5C5E90;
-          color: #FFFFFF;
+          background-color: var(--app-color-acento-terciario);
+          color: var(--app-color-blanco);
           font-weight: bold;
         }
 
         &.today:not(.selected) {
-          border: 1px solid #D5C2BD;
+          border: 1px solid var(--app-color-texto-secundario);
         }
 
         &.other-month {
@@ -169,10 +169,10 @@
 // Estilo personalizado para el calendario
 .custom-calendar {
   width: 100%;
-  background-color: #959EB2;
+  background-color: var(--ion-color-medium);
   border-radius: 0 0 8px 8px;
-  --background: #959EB2;
-  --color: #F5F5F5;
+  --background: var(--ion-color-medium);
+  --color: var(--ion-color-light);
   --ion-font-family: 'Playfair Display', serif;
 
   // Ocultar componentes del header predeterminado
@@ -189,7 +189,7 @@
 
   // Personalizar los días de la semana
   ::ng-deep .calendar-day-of-week {
-    color: #F5F5F5 !important;
+    color: var(--ion-color-light) !important;
     font-weight: 500;
     text-transform: uppercase;
     font-size: 12px;
@@ -197,14 +197,14 @@
 
   // Personalizar los días
   ::ng-deep .calendar-day {
-    color: #F5F5F5 !important;
+    color: var(--ion-color-light) !important;
     font-weight: normal;
   }
 
   // Día seleccionado
   ::ng-deep .calendar-day-active {
-    background-color: #5C5E90 !important;
-    color: #FFFFFF !important;
+    background-color: var(--app-color-acento-terciario) !important;
+    color: var(--app-color-blanco) !important;
     border-radius: 50%;
   }
 
@@ -227,7 +227,7 @@
     position: relative;
     height: 200px;
     overflow: hidden;
-    background: #384455;
+    background: var(--app-color-fondo-principal);
     border-radius: 12px;
     backdrop-filter: blur(10px);
 
@@ -243,7 +243,7 @@
 
       .indicator-line {
         height: 1px;
-        background: linear-gradient(90deg, transparent, #D5C2BD, transparent);
+        background: linear-gradient(90deg, transparent, var(--app-color-texto-secundario), transparent);
         margin: 0 20px;
 
         &.top {
@@ -291,7 +291,7 @@
           justify-content: center;
           font-family: 'Playfair Display', serif;
           font-size: 18px;
-          color: rgba(213, 194, 189, 0.5);
+          color: rgba(var(--app-color-texto-secundario-rgb), 0.5); // Usar RGBA para la opacidad
           cursor: pointer;
           transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
           user-select: none;
@@ -300,16 +300,16 @@
 
           // Estado activo/seleccionado
           &.active {
-            color: #D5C2BD;
+            color: var(--app-color-texto-secundario);
             font-size: 22px;
             font-weight: 600;
-            text-shadow: 0 0 10px rgba(213, 194, 189, 0.5);
+            text-shadow: 0 0 10px rgba(var(--app-color-texto-secundario-rgb), 0.5);
             transform: scale(1.1);
           }
 
           // Efecto hover
           &:hover:not(.active) {
-            color: rgba(213, 194, 189, 0.8);
+            color: rgba(var(--app-color-texto-secundario-rgb), 0.8);
             transform: scale(1.05);
           }
 
@@ -343,8 +343,8 @@
         font-family: 'Playfair Display', serif;
         font-size: 24px;
         font-weight: 600;
-        color: #D5C2BD;
-        text-shadow: 0 0 8px rgba(213, 194, 189, 0.3);
+        color: var(--app-color-texto-secundario);
+        text-shadow: 0 0 8px rgba(var(--app-color-texto-secundario-rgb), 0.3);
         flex-shrink: 0;
       }
     }
@@ -358,8 +358,8 @@
       right: 0;
       height: 60px;
       background: linear-gradient(180deg,
-        rgba(56, 68, 85, 0.9) 0%,
-        rgba(56, 68, 85, 0.5) 50%,
+        rgba(var(--app-color-fondo-principal-rgb), 0.9) 0%,
+        rgba(var(--app-color-fondo-principal-rgb), 0.5) 50%,
         transparent 100%);
       z-index: 5;
       pointer-events: none;
@@ -373,8 +373,8 @@
       right: 0;
       height: 60px;
       background: linear-gradient(0deg,
-        rgba(56, 68, 85, 0.9) 0%,
-        rgba(56, 68, 85, 0.5) 50%,
+        rgba(var(--app-color-fondo-principal-rgb), 0.9) 0%,
+        rgba(var(--app-color-fondo-principal-rgb), 0.5) 50%,
         transparent 100%);
       z-index: 5;
       pointer-events: none;
@@ -393,14 +393,14 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #959EB2;
+    background-color: var(--ion-color-medium);
     border-radius: 8px 8px 0 0;
     padding: 10px;
 
     .calendar-nav-btn {
       background: none;
       border: none;
-      color: #384455;
+      color: var(--app-color-fondo-principal);
       font-size: 18px;
       cursor: pointer;
       width: 30px;
@@ -408,7 +408,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background-color: rgba(255, 255, 255, 0.1);
+      background-color: rgba(var(--app-color-blanco-rgb), 0.1); // Usar RGBA para la opacidad
       border-radius: 4px;
 
       &:focus {
@@ -418,10 +418,10 @@
 
     .month-display {
       font-family: 'Playfair Display', serif;
-      color: #384455;
+      color: var(--app-color-fondo-principal);
       font-size: 18px;
       padding: 5px 15px;
-      background-color: rgba(255, 255, 255, 0.1);
+      background-color: rgba(var(--app-color-blanco-rgb), 0.1); // Usar RGBA para la opacidad
       border-radius: 4px;
     }
   }
@@ -435,8 +435,8 @@
   .dropdown-button {
     width: 100%;
     height: 38px;
-    background: #ECE9E9;
-    border: 1px solid #B8B8B8;
+    background: var(--ion-color-light-shade);
+    border: 1px solid var(--ion-color-medium-shade);
     border-radius: 12px;
     padding: 0 30px 0 10px;
     display: flex;
@@ -445,17 +445,17 @@
     cursor: pointer;
     font-family: 'Playfair Display', serif;
     font-size: 13px;
-    color: #384455;
+    color: var(--app-color-fondo-principal);
     transition: all 0.2s ease;
     box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
 
     &:hover {
-      border-color: #999999;
+      border-color: var(--ion-color-medium);
     }
 
     &:focus {
       outline: none;
-      border-color: #384455;
+      border-color: var(--app-color-fondo-principal);
       box-shadow: 0 0 0 2px rgba(56, 68, 85, 0.2);
     }
 
@@ -474,13 +474,13 @@
       height: 0;
       border-left: 4px solid transparent;
       border-right: 4px solid transparent;
-      border-top: 4px solid #384455;
+      border-top: 4px solid var(--app-color-fondo-principal);
       transition: transform 0.2s ease;
     }
   }
   &.open {
     .dropdown-button {
-      border-color: #384455;
+      border-color: transparent;
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;
       border-top-left-radius: 12px;
@@ -497,8 +497,8 @@
     top: 100%;
     left: 0;
     right: 0;
-    background: #ECE9E9B8;
-    border: 1px solid #384455;
+    background: #ffffff; // Usar RGBA para la opacidad
+    border: 1px solid var(--app-color-fondo-principal);
     border-top: none;
     border-radius: 0 0 12px 12px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
@@ -508,15 +508,15 @@
 
     .dropdown-item {
       padding: 8px 10px;
-      color: #384455;
+      color: var(--app-color-fondo-principal);
       font-family: 'Playfair Display', serif;
       font-size: 13px;
       cursor: pointer;
       transition: background-color 0.15s ease;
-      border-bottom: 1px solid #D0D0D0;
+      border-bottom: 1px solid var(--ion-color-light-shade);
 
       &:hover {
-        background-color: #F5F5F5;
+        background-color: var(--ion-color-light);
       }
 
       &:last-child {
